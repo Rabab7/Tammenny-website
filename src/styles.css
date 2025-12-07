@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import 'tailwindcss';
+
+@theme {
+  --darkMode: 'class';
+  --color-primary: 'red';
+}
+
+
+.form-control {
+  @apply block  w-full  px-4 py-2 text-black bg-white border border-cyan-300 rounded-2xl focus:outline-none focus:ring focus:ring-indigo-200 focus:border-cyan-500;
+}
+.valid {
+  @apply border-green-500 focus:ring-green-500;
+}
+.invalid {
+  @apply border-red-500 focus:ring-red-500;
+}
+.rating-color {
+  @apply text-yellow-500;
+}
