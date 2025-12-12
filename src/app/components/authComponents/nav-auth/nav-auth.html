@@ -1,0 +1,37 @@
+
+ <nav class="nav bg-black boxShadow  p-5 top-0 left-0 right-0 z-50  flex justify-evenly items-center ">
+        <div class="navLogo flex">
+            <h1
+                class=" text-white text-4xl ml-6 tracking-wide font-bold uppercase pr-4 border-r-[2.3px] border-r-white/40">
+                tammenny</h1>
+
+        </div>
+        <div class="navLinks ">
+            <ul class="hidden lg:flex justify-evenly gap-6 text-white text-[17px] font-semibold cursor-pointer">
+                <li>
+                    <a  routerLink="login">login</a>
+                </li>
+                <li>
+                    <a routerLink="register">register</a>
+                </li>
+                
+            </ul>
+        </div>
+
+        <!-- <button class="lg:hidden mx-auto me-7 sm:me-16  md:me-16 menuIcon cursor-pointer">
+            <i class="fa-solid fa-bars fa-2xl"></i>
+        </button> -->
+
+        <!-- dropDown menu -->
+        <div class="dropNavLinks ">
+            <ul
+                class="dropDownMenu lg:hidden flex flex-col items-center  gap-8 rounded-br-4xl rounded-bl-4xl mx-5 absolute left-0 top-24 right-0 bg-main boxShadow p-6 text-white text-[17px] font-semibold z-50 cursor-pointer">
+               <li>
+                    <a class="active " href="#home">login</a>
+                </li>
+                <li>
+                    <a href="#services">register</a>
+                </li>
+            </ul>
+        </div>
+    </nav>

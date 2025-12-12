@@ -23,21 +23,21 @@
                                 Patient</div>
                         </div>
 
-                        <form class="bg-cyan-100 shadow-2xl rounded-4xl p-5 w-full ">
+                        <form class="bg-cyan-100 shadow-2xl rounded-4xl p-5 w-full " [formGroup]="registerForm" (ngSubmit)="login()">
                             <div class="my-5">
                                 <label for="email" class=" capitalize font-bold">email:</label>
-                                <input type="email" id="email" class="form-control mt-1" >
+                                <input type="email" id="email" class="form-control mt-1" formControlName="email">
 
                             </div>
 
                             <div class="my-5">
                                 <label for="password" class=" capitalize font-bold">password:</label>
-                                <input type="password" id="password" class="form-control mt-1"
+                                <input type="password" id="password" class="form-control mt-1" formControlName="password"
                                     >
                             </div>
 
                             <div class="flex justify-between gap-4">
-                                <a
+                                <a (click)="reset()"
                                     class="font-bold whitespace-nowrap text-cyan-700 hover:text-blue-700 cursor-pointer sm:text-sm md:text-[17px] lg:text-xl my-3 -ml-3 md:-ml-2 capitalize">forget
                                     password ?</a>
                                 <button type="submit"
