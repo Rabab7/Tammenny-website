@@ -13,17 +13,24 @@
 
                         <!-- tammenny users -->
                         <div class="flex gap-3 justify-center mb-8">
-                            <div
-                                class="px-6 py-2 rounded-2xl font-semibold cursor-pointer text-xl text-white bg-cyan-700 shadow-md hover:bg-blue-500">
-                                Doctor</div>
-                            <div
-                                class="px-6 py-2 rounded-2xl font-semibold cursor-pointer text-xl text-white bg-blue-600 shadow-md hover:bg-blue-500">
-                                Patient</div>
+                            <button (click)="selectRole('Doctor')" [ngClass]="{
+                                    'bg-cyan-700 hover:bg-cyan-500': registerForm.get('role')?.value !== 'Doctor',
+                                    'bg-cyan-300 shadow-xl': registerForm.get('role')?.value === 'Doctor'
+                                }"
+                                class="px-6 py-2 rounded-2xl font-semibold cursor-pointer text-xl text-white shadow-2xl">
+                                Doctor</button>
+
+                            <button (click)="selectRole('Patient')" [ngClass]="{
+                                    'bg-cyan-700 hover:bg-cyan-500': registerForm.get('role')?.value !== 'Patient',
+                                    'bg-cyan-300 shadow-xl': registerForm.get('role')?.value === 'Patient'
+                                }"
+                                class="px-6 py-2 rounded-2xl font-semibold cursor-pointer text-xl text-white shadow-2xl">
+                                Patient</button>
                         </div>
 
 
-                        <form class="bg-cyan-100  shadow-2xl rounded-4xl p-5 w-full md:w-[303px] lg:w-[399px] mx-auto "
-                            [formGroup]="registerForm" (ngSubmit)="regiter()">
+                        <form class="bg-cyan-100  shadow-2xl rounded-4xl p-5 w-full  mx-auto "
+                            [formGroup]="registerForm" (ngSubmit)="register()">
 
                             <div class="my-5">
                                 <label for="name" class="mb-2  capitalize font-bold">Name:</label>
@@ -86,12 +93,12 @@
                             <div class="my-5">
                                 <label for="rePassword" class="mb-2   font-bold">rePassword:</label>
                                 <input type="Password" id="rePassword" class="form-control" placeholder="ex:123123"
-                                    [ngClass]="{
-                                       'valid':!registerForm.getError('missMatch') && (registerForm.get('rePassword')?.touched ||  registerForm.get('rePassword')?.dirty ),
-                                       'invalid':registerForm.getError('missMatch') && (registerForm.get('rePassword')?.touched ||  registerForm.get('rePassword')?.dirty ) ,
+                                    formControlName="rePassword" [ngClass]="{
+                                      'valid':!registerForm.getError('missMatch') && (registerForm.get('rePassword')?.touched || registerForm.get('rePassword')?.dirty ),
+                                      'invalid':registerForm.getError('missMatch') && (registerForm.get('rePassword')?.touched || registerForm.get('rePassword')?.dirty ) ,
                                   }">
 
-                                @if(registerForm.getError('misMatch') && registerForm.get('rePassword')?.touched){
+                                @if(registerForm.getError('missMatch') && registerForm.get('rePassword')?.touched){
                                 <div class="bg-cyan-300 text-lg p-3 rounded-2xl my-3 font-semibold shadow-2xl">
                                     <p>confirm password is not correct</p>
                                 </div>
@@ -101,7 +108,8 @@
 
                             <div class="my-5">
                                 <label for="phone" class="mb-2  capitalize   font-bold">phone:</label>
-                                <input type="tel" id="phone" class="form-control" placeholder="ex:123123" [ngClass]="{
+                                <input type="tel" id="phone" class="form-control" placeholder="ex:123123"
+                                    formControlName="phone" [ngClass]="{
                                      'valid':!registerForm.get('phone')?.errors  && (registerForm.get('phone')?.touched ||  registerForm.get('phone')?.dirty ),
                                     'invalid':registerForm.get('phone')?.errors  && (registerForm.get('phone')?.touched ||  registerForm.get('phone')?.dirty ) ,
                                      }">
@@ -117,12 +125,18 @@
 
                             </div>
 
-                            <button type="submit"
-                                class="w-1/2 cursor-pointer p-2 shadow-2xl  rounded-2xl border-2 border-cyan-300 text-lg block mx-auto text-black font-bold">Register
-
+                            <button type="submit" [disabled]="registerForm.invalid" [ngClass]="{
+                               'bg-cyan-500  hover:shadow-none': !registerForm.invalid, 
+                              'bg-cyan-300': registerForm.invalid
+                           }"
+                                class="w-1/2 cursor-pointer p-2 shadow-2xl  rounded-2xl border-2 border-cyan-300 text-lg block mx-auto text-black font-bold">
+                                Register
+                                @if (loading === true) {
+                                <span><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                                }
                             </button>
 
-                           
+
 
                             @if (errorText)
                             {

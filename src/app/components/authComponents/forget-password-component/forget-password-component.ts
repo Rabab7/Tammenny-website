@@ -6,40 +6,71 @@ import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-forget-password-component',
-  imports: [NgClass , RouterLink , ReactiveFormsModule],
+  imports: [ ReactiveFormsModule , NgClass],
   templateUrl: './forget-password-component.html',
   styleUrl: './forget-password-component.css',
 })
 export class ForgetPasswordComponent {
-  authService = inject(AuthService);
-  authRouter = inject(Router);
-  loading: boolean = false;
-  successMessage: string | null = null;
-  errorText: string | null = null;
+  constructor(private _AuthService: AuthService, private _Router: Router) {}
 
-  forgetForm: FormGroup = new FormGroup({
+  loading: boolean = false;
+  errorText!: string;
+  step: 'email' | 'code' = 'email'; 
+  userEmail: string = ''; 
+
+  emailForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
   });
 
-  sendResetLink() {
-    if (this.forgetForm.invalid) return;
+  codeForm: FormGroup = new FormGroup({
+    resetCode: new FormControl(null, [Validators.required, Validators.maxLength(6)]),
+  });
+
+  
+  sendResetEmail(): void {
+    if (this.emailForm.invalid) return;
 
     this.loading = true;
-    this.errorText = null;
-    this.successMessage = null;
+    this.userEmail = this.emailForm.get('email')?.value;
 
-    const email = this.forgetForm.get('email')?.value;
-
-    this.authService.sendPasswordResetLink(email).subscribe({
-      next: () => {
+    this._AuthService.forgetPassword({ email: this.userEmail }).subscribe({
+      next: (res) => {
         this.loading = false;
-        
-        this.successMessage =
-          'A password reset link has been sent. Plz check your email.';
+        if (res.message === 'success') {
+          this.errorText = 'Code sent successfully. Enter the code below.';
+          this.step = 'code'; 
+        } else {
+          this.errorText = res.message || 'Failed to send code.';
+        }
       },
       error: (err) => {
         this.loading = false;
-        this.errorText = err.code || 'Something Wrong Plz Try Again Later';
+        this.errorText = err.error?.message || 'Error occurred while sending email.';
+      },
+    });
+  }
+
+ 
+  verifyCode(): void {
+    if (this.codeForm.invalid) return;
+
+    this.loading = true;
+    const resetCode = this.codeForm.get('resetCode')?.value;
+
+    this._AuthService.verifyCode({ email: this.userEmail, resetCode: resetCode }).subscribe({
+      next: (res) => {
+        this.loading = false;
+        if (res.message === 'success') {
+          this.errorText = 'Code verified. Redirecting to reset password...';
+          
+          this._Router.navigate(['/resetPassword'], { queryParams: { email: this.userEmail } });
+        } else {
+          this.errorText = res.message || 'Invalid code.';
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        this.errorText = err.error?.message || 'Error occurred during verification.';
       },
     });
   }

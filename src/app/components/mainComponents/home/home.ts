@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../../core/services/auth/auth-service';
+import { Router, RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -7,5 +10,6 @@ import { Component } from '@angular/core';
   styleUrl: './home.css',
 })
 export class Home {
+ 
 
 }

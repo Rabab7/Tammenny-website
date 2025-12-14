@@ -1,74 +1,72 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth-service';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-reset-password-component',
-  imports: [NgClass , RouterLink , ReactiveFormsModule],
+  imports: [ ReactiveFormsModule , NgClass],
   templateUrl: './reset-password-component.html',
   styleUrl: './reset-password-component.css',
 })
 export class ResetPasswordComponent {
-  authService = inject(AuthService);
-  router = inject(Router); 
-  route = inject(ActivatedRoute); // لجلب الباراميترات من الرابط
+  constructor(
+    private _AuthService: AuthService,
+    private _Router: Router,
+    private _ActivatedRoute: ActivatedRoute
+  ) {}
+
   loading: boolean = false;
-  errorText: string | null = null;
-  oobCode: string | null = null; // الكود الذي نحتاجه لتغيير كلمة المرور
+  errorText!: string;
+  userEmail: string = '';
 
-  resetForm: FormGroup = new FormGroup({
-    newPassword: new FormControl(null, [Validators.required, Validators.pattern(/^\w{6,}$/)]),
-    confirmPassword: new FormControl(null, [Validators.required]),
-  });
+  resetForm: FormGroup = new FormGroup(
+    {
+      newPassword: new FormControl(null, [Validators.required, Validators.pattern(/^\w{6,}$/)]),
+      confirmPassword: new FormControl(null),
+    },
+    this.confirmPassword
+  );
 
-  constructor() {
-    // جلب oobCode من الكويري باراميتر (Query Parameters)
-    this.route.queryParams.subscribe((params) => {
-      this.oobCode = params['oobCode'] || null;
-      // إذا لم يكن هناك oobCode، لا يمكننا الاستمرار (أو نوجههم إلى صفحة الخطأ/البدء)
-      if (!this.oobCode) {
-        this.errorText = 'رابط إعادة تعيين كلمة المرور غير صالح أو منتهي الصلاحية.';
+  ngOnInit(): void {
+   
+    this._ActivatedRoute.queryParams.subscribe((params) => {
+      this.userEmail = params['email'] || '';
+      if (!this.userEmail) {
+       
+        this._Router.navigate(['/forgotPassword']);
       }
     });
-
-    // إضافة Custom Validator للتأكد من تطابق كلمتي المرور
-    
   }
 
-  // دالة تحقق مخصصة لتطابق كلمتي المرور
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('newPassword')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-
-    if (password !== confirmPassword) {
-      form.get('confirmPassword')?.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    } else {
-      form.get('confirmPassword')?.setErrors(null);
-      return null;
-    }
+  confirmPassword(g: AbstractControl) {
+    return g.get('newPassword')?.value === g.get('confirmPassword')?.value
+      ? null
+      : { missMatch: true };
   }
 
-  resetPassword() {
-    if (this.resetForm.invalid || !this.oobCode) return;
+  resetPassword(): void {
+    if (this.resetForm.invalid || !this.userEmail) return;
 
     this.loading = true;
-    this.errorText = null;
-
     const newPassword = this.resetForm.get('newPassword')?.value;
 
-    this.authService.confirmPasswordReset(this.oobCode!, newPassword).subscribe({
-      next: () => {
+    this._AuthService.resetPassword({ email: this.userEmail, newPassword: newPassword }).subscribe({
+      next: (res) => {
         this.loading = false;
-        alert('تم تغيير كلمة المرور بنجاح! سيتم توجيهك لصفحة الدخول.');
-        // التوجيه إلى صفحة الدخول
-        this.router.navigate(['/login']);
+        if (res.message === 'success') {
+          this.errorText = 'Password reset successfully. Redirecting to login...';
+          setTimeout(() => {
+            this._Router.navigate(['/login']);
+          }, 2000);
+        } else {
+          this.errorText = res.message || 'Failed to reset password.';
+        }
       },
       error: (err) => {
         this.loading = false;
-        this.errorText = err.code || 'فشل تغيير كلمة المرور. تأكد من أن الرابط صالح.';
+        this.errorText = err.error?.message || 'Error occurred while resetting password.';
       },
     });
   }

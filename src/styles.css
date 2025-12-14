@@ -12,10 +12,10 @@
   @apply block  w-full  px-4 py-2 text-black bg-white border border-cyan-300 rounded-2xl focus:outline-none focus:ring focus:ring-indigo-200 focus:border-cyan-500;
 }
 .valid {
-  @apply border-green-500 focus:ring-green-500;
+  @apply border-green-600 focus:ring-green-600;
 }
 .invalid {
-  @apply border-red-500 focus:ring-red-500;
+  @apply border-red-600 focus:ring-red-600;
 }
 .rating-color {
   @apply text-yellow-500;

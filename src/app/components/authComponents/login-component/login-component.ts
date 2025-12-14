@@ -1,51 +1,65 @@
 import { Component, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-login-component',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule , NgClass , RouterLink],
   templateUrl: './login-component.html',
   styleUrl: './login-component.css',
 })
 export class LoginComponent {
-  authService = inject(AuthService);
-  authRouter = inject(Router);
-  loading: boolean = false;
-  errorText!: string;
+ constructor(
+ private _AuthService: AuthService,
+ private _Router: Router
+ ) {}
+ loading: boolean = false;
+ errorText!: string;
 
-  registerForm: FormGroup = new FormGroup({
-    name: new FormControl(null, [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(5),
-    ]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required, Validators.pattern(/^\w{6,}$/)]),
-   
-  });
+ loginForm: FormGroup = new FormGroup({
+ 
+ email: new FormControl(null, [Validators.required, Validators.email]),
+ password: new FormControl(null, [Validators.required, Validators.pattern(/^\w{6,}$/)]),
+ });
+ 
 
-  login() {
-    const rawVal = this.registerForm.getRawValue();
-    this.authService.login(rawVal.email, rawVal.password).subscribe({
-      next: (res) => {
-        this.authRouter.navigate(['/home']);
-      },
-      error: (err) => {
-        this.errorText = err.code;
-      },
-    });
-  }
+ login() {
+ if (this.loginForm.invalid) return;
+
+ this.loading = true;
+ const rawVal = this.loginForm.value;
+
+ this._AuthService.login(rawVal).subscribe({
+  next: (res) => {
+  this.loading = false;
+  if (res.message === 'success' && res.token) {
+   const token = res.token;
 
   
- reset(){
-  this.authRouter.navigate(['/forgotPassword'])
+   this._AuthService.saveDecodedToken(token); 
+
+   
+   const role = localStorage.getItem('role');
+
+   
+   if (role === 'Doctor') {
+   this._Router.navigate(['/doctor']);
+   } else if (role === 'Patient') {
+   this._Router.navigate(['/patient']);
+   } else {
+
+   this._Router.navigate(['/home']);
+   }
+  }
+  },
+  error: (err) => {
+  console.error(err);
+  
+  this.errorText = err.error?.message || 'Login failed';
+  this.loading = false;
+  },
+ });
  }
 }

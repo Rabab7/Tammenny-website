@@ -1,0 +1,48 @@
+
+<section class=" ">
+    <div class="max-w-screen-xl mx-auto ">
+        <div class="container mx-auto py-28 min-h-screen  flex justify-center items-center">
+              
+            <form class="shadow-2xl shadow-slate-500 bg-slate-200 p-3 w-10/12 lg:w-1/2 " [formGroup]="verifyCodeForm" (ngSubmit)="verifyCode()">
+                <div class="my-5">
+                    <label for="resetCode" class=" font-bold whitespace-nowrap">plz enter your verification code:</label>
+                    <input type="text" id="resetCode" class="form-control mt-1" placeholder="code" formControlName="resetCode"
+                    [ngClass]="{
+                        'valid':!verifyCodeForm.get('resetCode')?.errors  && (verifyCodeForm.get('resetCode')?.touched ||  verifyCodeForm.get('resetCode')?.dirty ),
+                        'invalid':verifyCodeForm.get('resetCode')?.errors  && (verifyCodeForm.get('resetCode')?.touched ||  verifyCodeForm.get('resetCode')?.dirty ) ,
+                     }"
+                    >
+                    @if(verifyCodeForm.get('resetCode')?.errors && verifyCodeForm.get('resetCode')?.touched){
+                        <div class="bg-red-400 text-lg p-2 rounded my-3 font-semibold shadow-lg">
+                            @if(verifyCodeForm.get('resetCode')?.getError('required')){<p>code must be required</p>}
+                           
+                           
+                        </div>
+                    }
+                    
+                </div>
+
+                @if (errorText) 
+                {
+                    <div class="my-4  ">
+                        <p class="text-center w-1/2 font-bold text-lg rounded-lg bg-teal-500 mx-auto p-2">{{errorText}}</p>
+                    </div>
+
+                }
+
+                <button [disabled]="verifyCodeForm.invalid" type="submit" class="w-1/2 bg-green-500 p-2 shadow-2xl shadow-green-900 cursor-pointer  hover:shadow-none rounded-lg text-lg block  text-black font-bold capitalize whitespace-nowrap"
+                [ngClass]="{
+                    'bg-green-500  hover:shadow-none': !verifyCodeForm.invalid, 
+                    'bg-gray-300': verifyCodeForm.invalid
+                }" 
+                >verify
+                    @if (loading === true) {
+                        <span><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                    }
+                </button>
+
+            </form>
+            
+        </div>
+    </div>
+</section>
