@@ -47,7 +47,7 @@ export class LoginComponent {
    if (role === 'Doctor') {
    this._Router.navigate(['/doctor']);
    } else if (role === 'Patient') {
-   this._Router.navigate(['/patient']);
+   this._Router.navigate(['/home']);
    } else {
 
    this._Router.navigate(['/home']);
