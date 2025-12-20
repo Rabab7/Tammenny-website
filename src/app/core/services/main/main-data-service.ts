@@ -1,6 +1,6 @@
 // import {Idoctor} from '/src/app/core/interfaces/IDoctor/idoctor';
 import { inject, Injectable } from '@angular/core';
-import { IDoctor } from '../../interfaces/IDoctor/idoctor';
+
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';

@@ -1,27 +1,148 @@
-
-
-
 {
   "api_v1_doctors": [
-    { "id": 1, "name": "Dr. Ahmed Samy", "specialty": "Cardiology", "fee": 350, "rating": 4.5 },
-    { "id": 2, "name": "Dr. Laila Fouad", "specialty": "Dermatology", "fee": 400, "rating": 4.8 }
+    {
+      "id": "1",
+      "name": "Dr. Ahmed Samy",
+      "specialty": "Cardiology",
+      "image": "assets/images/doctors/doctors-1.jpg",
+      "fee": 350,
+      "rating": 4.5
+    },
+    {
+      "id": "2",
+      "name": "Dr. Laila Fouad",
+      "specialty": "Neurology",
+      "image": "assets/images/doctors/doctors-2.jpg",
+      "fee": 400,
+      "rating": 4.8
+    } ,
+    {
+      "id": "3",
+      "name": "Dr. Mohamed Ali",
+      "specialty": "Hepatology",
+      "image": "assets/images/doctors/doctors-3.jpg",
+      "fee": 350,
+      "rating": 4.5
+    },
+    {
+      "id": "4",
+      "name": "Dr. Rabab Refaat",
+      "specialty": "Pediatrics",
+      "image": "assets/images/doctors/doctors-4.jpg",
+      "fee": 350,
+      "rating": 4.5
+    },
+    {
+      "id": "5",
+      "name": "Dr. Ahmed Refaat",
+      "specialty": "Eyecare",
+      "image": "assets/images/doctors/doctors-5.jpg",
+      "fee": 350,
+      "rating": 4.5
+    },
+    {
+      "id": "6",
+      "name": "Dr. Mohamed Refaat",
+      "specialty": "Physical Therapy",
+      "image": "assets/images/doctors/doctors-6.jpg",
+      "fee": 350,
+      "rating": 4.5
+    }
   ],
   "api_v1_patients": [
-    { "id": 101, "email": "patient@test.com", "name": "Maged Ali", "role": "Patient", "phone": "01000000000" }
+    {
+      "id": "101",
+      "email": "patient@test.com",
+      "name": "Maged Ali",
+      "role": "Patient",
+      "phone": "01000000000"
+    }
   ],
-   "api_v1_departments": [
-     { "id": 50, "name": "Cardiology", "image": "assets/images/departments-1.jpg" },  
-     { "id": 51, "name": "Neurology", "image": "assets/images/departments-2.jpg" },
-     { "id": 52, "name": "Pediatrics", "image": "assets/images/departments-3.jpg" },
-     { "id": 53, "name": "Orthopedics", "image": "assets/images/departments-4.jpg" }
+  "api_v1_departments": [
+    {
+      "id": "50",
+      "name": "Cardiology",
+      "image": "assets/images/departments-1.jpg"
+    },
+    {
+      "id": "51",
+      "name": "Neurology",
+      "image": "assets/images/departments-2.jpg"
+    },
+    {
+      "id": "52",
+      "name": "Hepatology",
+      "image": "assets/images/departments-3.jpg"
+    },
+    {
+      "id": "53",
+      "name": "Pediatrics",
+      "image": "assets/images/departments-4.jpg"
+    },
+    {
+      "id": "53",
+      "name": "Eyecare",
+      "image": "assets/images/departments-5.jpg"
+    },
+    {
+      "id": "53",
+      "name": "Physical Therapy",
+      "image": "assets/images/departments-6.jpg"
+    }
   ],
   "api_v1_appointments": [
-    { "id": 201, "doctorId": 1, "patientId": 101, "date": "2025-12-25", "time": "10:00", "status": "Booked", "symptoms": "Chest pain." },
-    { "id": 202, "doctorId": 2, "patientId": 101, "date": "2025-12-28", "time": "11:30", "status": "Completed", "symptoms": "Chronic headache." }
+    {
+      "id": "201",
+      "doctorId": 1,
+      "patientId": 101,
+      "date": "2025-12-25",
+      "time": "10:00",
+      "status": "Booked",
+      "symptoms": "Chest pain."
+    },
+    {
+      "id": "202",
+      "doctorId": 2,
+      "patientId": 101,
+      "date": "2025-12-28",
+      "time": "11:30",
+      "status": "Completed",
+      "symptoms": "Chronic headache."
+    },
+    {
+      "id": "6e64",
+      "doctorId": "1",
+      "patientId": "1a2b3c",
+      "date": "2025-12-25",
+      "time": "07:53",
+      "status": "Pending",
+      "symptoms": "",
+      "tests": ""
+    }
   ],
   "api_v1_medicalRecords": [
-     { "id": 301, "patientId": 101, "doctorId": 1, "date": "2025-12-25", "diagnosis": "High Blood Pressure", "tests": ["BP_Test_1.pdf"], "doctorNotes": "Please monitor BP twice daily. Follow up in 1 week.", "isNew": false },
-
-     { "id": 500, "patientId": 101, "doctorId": 1, "date": "2025-12-10", "diagnosis": "Initial checkup", "tests": ["https://dummy-lab-report.pdf"], "doctorNotes": "Needs follow-up in 2 weeks." }
+    {
+      "id": "301",
+      "patientId": 101,
+      "doctorId": 1,
+      "date": "2025-12-25",
+      "diagnosis": "High Blood Pressure",
+      "tests": [
+        "BP_Test_1.pdf"
+      ],
+      "doctorNotes": "Please monitor BP twice daily. Follow up in 1 week.",
+      "isNew": false
+    },
+    {
+      "id": "500",
+      "patientId": 101,
+      "doctorId": 1,
+      "date": "2025-12-10",
+      "diagnosis": "Initial checkup",
+      "tests": [
+        "https://dummy-lab-report.pdf"
+      ],
+      "doctorNotes": "Needs follow-up in 2 weeks."
+    }
   ]
 }

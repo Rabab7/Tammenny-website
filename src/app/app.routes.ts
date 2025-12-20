@@ -7,6 +7,13 @@ import { ForgetPasswordComponent } from './components/authComponents/forget-pass
 import { ResetPasswordComponent } from './components/authComponents/reset-password-component/reset-password-component';
 import { DoctorComponent } from './components/mainComponents/doctor-component/doctor-component';
 import { PatientComponent } from './components/mainComponents/patient-component/patient-component';
+import { AppointmentFormComponent } from './components/mainComponents/appointment-form-component/appointment-form-component';
+import { AboutComponent } from './components/mainComponents/about-component/about-component';
+import { DepartementsComponent } from './components/mainComponents/departements-component/departements-component';
+import { ServicesComponent } from './components/mainComponents/services-component/services-component';
+import { MainComponent } from './layouts/main-component/main-component';
+import { PaymentComponent } from './components/mainComponents/payment-component/payment-component';
+import { DoctorsComponent } from './components/mainComponents/doctors-component/doctors-component';
 
 export const routes: Routes = [
   {
@@ -20,7 +27,21 @@ export const routes: Routes = [
       { path: 'resetPassword', component: ResetPasswordComponent },
     ],
   },
-  { path: 'home', component: Home, title: 'home' },
-  { path: 'doctor', component: DoctorComponent },
-  { path: 'patient', component: PatientComponent },
+  {
+    path: '',
+    component: MainComponent,
+    children: [
+      { path: 'home', component: Home, title: 'Home' },
+      { path: 'about', component: AboutComponent, title: 'About' },
+      { path: 'departements', component: DepartementsComponent, title: 'Departements' },
+      { path: 'services', component: ServicesComponent, title: 'Services' },
+      { path: 'doctors', component: DoctorsComponent, title: 'Doctors' },
+      { path: 'patient', component: PatientComponent },
+      { path: 'appointment', component: AppointmentFormComponent , title: 'Appointment' },
+      { path: 'payment', component: PaymentComponent , title :'Payment' },
+
+    ],
+  },
+
+  { path: 'doctor', component: DoctorComponent, title: 'Doctor' },
 ];

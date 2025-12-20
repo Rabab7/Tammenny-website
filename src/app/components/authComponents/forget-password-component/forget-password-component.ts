@@ -11,11 +11,12 @@ import { NgClass } from '@angular/common';
   styleUrl: './forget-password-component.css',
 })
 export class ForgetPasswordComponent {
-  constructor(private _AuthService: AuthService, private _Router: Router) {}
+  _AuthService = inject(AuthService)
+   _Router = inject(Router)
 
   loading: boolean = false;
   errorText!: string;
-  step: 'email' | 'code' = 'email'; 
+  step = 'email' ; 
   userEmail: string = ''; 
 
   emailForm: FormGroup = new FormGroup({

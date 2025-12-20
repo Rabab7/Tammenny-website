@@ -1,0 +1,54 @@
+<nav
+    class="nav bg-linear-to-b md:bg-linear-to-r from-white  to-cyan-200  shadow-2xl rounded-bl-4xl rounded-br-4xl p-5 top-0 left-0 right-0 z-50  flex justify-evenly items-center ">
+    <div class="navLogo flex">
+        <h1 routerLink="/home"
+            class=" text-cyan-700 cursor-pointer text-4xl ml-6 tracking-wide font-bold uppercase pr-4 border-r-[2.3px] border-r-white/40">
+            tammenny</h1>
+
+    </div>
+    <div class="navLinks ">
+        <ul class="hidden text-blue-600  lg:flex justify-evenly gap-6  text-[22px] font-semibold cursor-pointer">
+            <li>
+                <a routerLink="about" routerLinkActive="text-black">About</a>
+            </li>
+             <li>
+                <a routerLink="services" routerLinkActive="text-black">Services</a>
+            </li>
+            <li>
+                <a routerLink="departements" routerLinkActive="text-black">Departements</a>
+            </li>
+             <li>
+                <a routerLink="doctors" routerLinkActive="text-black">Doctors</a>
+            </li>
+           
+            
+            
+
+        </ul>
+
+       
+    </div>
+    
+     @if (isAuthenticated) {
+        <button (click)="handleLogout()"
+            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold">
+            Logout
+        </button>
+        } @else {
+        <a [routerLink]="['/login']"
+            class="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 font-semibold">
+            Login
+        </a>
+        }
+    <!-- <button class="lg:hidden mx-auto me-7 sm:me-16  md:me-16 menuIcon cursor-pointer">
+            <i class="fa-solid fa-bars fa-2xl"></i>
+        </button> -->
+
+    <!-- dropDown menu -->
+    <div class="dropNavLinks ">
+        <ul
+            class="dropDownMenu lg:hidden flex flex-col items-center  gap-8 rounded-br-4xl rounded-bl-4xl mx-5 absolute left-0 top-24 right-0 bg-main boxShadow p-6 text-white text-[17px] font-semibold z-50 cursor-pointer">
+           
+        </ul>
+    </div>
+</nav>
