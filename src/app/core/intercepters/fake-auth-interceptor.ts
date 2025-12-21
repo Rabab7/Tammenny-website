@@ -1,4 +1,3 @@
-
 import {
   HttpEvent,
   HttpHandlerFn,
@@ -80,7 +79,10 @@ export const fakeAuthInterceptor: HttpInterceptorFn = (
         if (req.url.endsWith('/auth/signup') && req.method === 'POST') {
           const { email, password, role, name } = req.body;
 
-          const newId = FAKE_USERS.length > 0? (Math.max(...FAKE_USERS.map((u) => Number(u.id))) + 1).toString(): '1';
+          const newId =
+            FAKE_USERS.length > 0
+              ? (Math.max(...FAKE_USERS.map((u) => Number(u.id))) + 1).toString()
+              : '1';
 
           if (FAKE_USERS.find((u) => u.email === email)) {
             return throwError(
@@ -134,7 +136,30 @@ export const fakeAuthInterceptor: HttpInterceptorFn = (
 
         // * 6.(Reset Password)
         if (req.url.endsWith('/auth/resetPassword') && req.method === 'PUT') {
-          return of(new HttpResponse({ status: 200, body: { message: 'success' } }));
+          const { email, newPassword } = req.body; 
+
+          
+          const userIndex = FAKE_USERS.findIndex((u) => u.email === email);
+
+          if (userIndex !== -1) {
+            FAKE_USERS[userIndex].password = newPassword; 
+            console.log('Password updated for user:', email, 'New password is:', newPassword);
+
+            return of(
+              new HttpResponse({
+                status: 200,
+                body: { message: 'success' },
+              })
+            );
+          } else {
+            return throwError(
+              () =>
+                new HttpResponse({
+                  status: 404,
+                  body: { message: 'User not found' },
+                })
+            );
+          }
         }
 
         return next(req);
