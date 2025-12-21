@@ -1,5 +1,4 @@
 import { PatientDashboard } from './components/mainComponents/patientComponents/patient-dashboard/patient-dashboard';
-import { DoctorComponent } from './components/mainComponents/doctorComponents/doctor-component/doctor-component';
 import { PaymentComponent } from './components/mainComponents/patientComponents/payment-component/payment-component';
 import { AppointmentFormComponent } from './components/mainComponents/patientComponents/appointment-form-component/appointment-form-component';
 import { DoctorsComponent } from './components/mainComponents/patientComponents/doctors-component/doctors-component';
