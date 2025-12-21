@@ -112,6 +112,7 @@ export class AppointmentFormComponent  {
       queryParams: {
         fee: this.allDoctors.find((d) => d.id === formValue.selectedDoctorId)?.fee,
         doctorName: this.allDoctors.find((d) => d.id === formValue.selectedDoctorId)?.name,
+        department:  this.allDoctors.find((d) => d.id === formValue.selectedDoctorId)?.specialty,
         appointment: JSON.stringify(appointmentData), 
       },
     });

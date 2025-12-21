@@ -15,6 +15,7 @@ export class PaymentComponent {
 
   fee: number = 0;
   doctorName: string = 'N/A';
+  departmentName: string = 'N/A';
   appointmentData!: Appointment;
   
   
@@ -38,6 +39,7 @@ export class PaymentComponent {
     this._route.queryParams.subscribe(params => {
       this.fee = parseFloat(params['fee']) || 0;
       this.doctorName = params['doctorName'] || 'N/A';
+      this.departmentName = params['specialty'] || 'General';
       if (params['appointment']) {
         this.appointmentData = JSON.parse(params['appointment']);
       }
