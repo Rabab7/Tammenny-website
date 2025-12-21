@@ -1,19 +1,21 @@
+import { PatientDashboard } from './components/mainComponents/patientComponents/patient-dashboard/patient-dashboard';
+import { DoctorComponent } from './components/mainComponents/doctorComponents/doctor-component/doctor-component';
+import { PaymentComponent } from './components/mainComponents/patientComponents/payment-component/payment-component';
+import { AppointmentFormComponent } from './components/mainComponents/patientComponents/appointment-form-component/appointment-form-component';
+import { DoctorsComponent } from './components/mainComponents/patientComponents/doctors-component/doctors-component';
+import { ServicesComponent } from './components/mainComponents/patientComponents/services-component/services-component';
+import { DepartementsComponent } from './components/mainComponents/patientComponents/departements-component/departements-component';
+import { AboutComponent } from './components/mainComponents/patientComponents/about-component/about-component';
+import { Home } from './components/mainComponents/patientComponents/home/home';
 import { Routes } from '@angular/router';
 import { AuthComponent } from './layouts/auth-component/auth-component';
 import { LoginComponent } from './components/authComponents/login-component/login-component';
 import { RegisterComponent } from './components/authComponents/register-component/register-component';
-import { Home } from './components/mainComponents/home/home';
 import { ForgetPasswordComponent } from './components/authComponents/forget-password-component/forget-password-component';
 import { ResetPasswordComponent } from './components/authComponents/reset-password-component/reset-password-component';
-import { DoctorComponent } from './components/mainComponents/doctor-component/doctor-component';
-import { PatientComponent } from './components/mainComponents/patient-component/patient-component';
-import { AppointmentFormComponent } from './components/mainComponents/appointment-form-component/appointment-form-component';
-import { AboutComponent } from './components/mainComponents/about-component/about-component';
-import { DepartementsComponent } from './components/mainComponents/departements-component/departements-component';
-import { ServicesComponent } from './components/mainComponents/services-component/services-component';
 import { MainComponent } from './layouts/main-component/main-component';
-import { PaymentComponent } from './components/mainComponents/payment-component/payment-component';
-import { DoctorsComponent } from './components/mainComponents/doctors-component/doctors-component';
+import { DoctorDashboard } from './components/mainComponents/doctorComponents/doctor-dashboard/doctor-dashboard';
+
 
 export const routes: Routes = [
   {
@@ -36,12 +38,12 @@ export const routes: Routes = [
       { path: 'departements', component: DepartementsComponent, title: 'Departements' },
       { path: 'services', component: ServicesComponent, title: 'Services' },
       { path: 'doctors', component: DoctorsComponent, title: 'Doctors' },
-      { path: 'patient', component: PatientComponent },
       { path: 'appointment', component: AppointmentFormComponent , title: 'Appointment' },
       { path: 'payment', component: PaymentComponent , title :'Payment' },
+      { path: 'patientDashboard', component: PatientDashboard , title :'patient dashboard' },
 
     ],
   },
 
-  { path: 'doctor', component: DoctorComponent, title: 'Doctor' },
+  { path: 'doctor', component: DoctorDashboard, title: 'Doctor' },
 ];

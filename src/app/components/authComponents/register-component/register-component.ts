@@ -27,13 +27,13 @@ export class RegisterComponent {
    name: new FormControl(null, [
     Validators.required,
     Validators.minLength(3),
-    Validators.maxLength(50), // 💡 تم تصحيح MaxLength إلى 50
+    Validators.maxLength(50), 
    ]),
    email: new FormControl(null, [Validators.required, Validators.email]),
    password: new FormControl(null, [Validators.required, Validators.pattern(/^\w{6,}$/)]),
    rePassword: new FormControl(null),
    phone: new FormControl(null, [Validators.required, Validators.pattern(/^01[125][0-9]{8}$/)]),
-   role: new FormControl('Patient', [Validators.required]) // 💡 تعيين 'Patient' كقيمة افتراضية
+   role: new FormControl('Patient', [Validators.required]) 
   },
   this.confirmPassword
  );
@@ -42,7 +42,7 @@ export class RegisterComponent {
   return g.get('password')?.value === g.get('rePassword')?.value ? null : { missMatch: true };
  }
 
-  // ⭐️ الإضافة الهامة: دالة لتعيين الدور عند النقر على الزر في الـ HTML
+ 
  selectRole(selectedRole: string): void {
   this.registerForm.get('role')?.setValue(selectedRole);
  }

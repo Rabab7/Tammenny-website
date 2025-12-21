@@ -1,0 +1,139 @@
+<section
+  class="py-16 bg-linear-to-b md:bg-linear-to-r from-white  to-cyan-200  shadow-2xl rounded-4xl overflow-hidden min-h-[300px] my-16 mx-8">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <h1 class="text-4xl font-extrabold text-cyan-800 mb-8">
+      Doctor Dashboard
+    </h1>
+
+    <p class="text-xl text-gray-600 mb-10">
+      Welcome back, Dr.
+      {{ authService.tokenDecode?.name || 'Doctor' }}.
+      Here are your upcoming appointments.
+    </p>
+
+    <div
+      class="bg-linear-to-b md:bg-linear-to-r from-white  to-cyan-200  shadow-2xl rounded-4xl overflow-hidden min-h-[300px] p-6">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">
+        Upcoming & Recent Appointments
+      </h2>
+
+      @if (appointments.length === 0) {
+      <p class="text-gray-500">
+        You have no appointments booked yet.
+      </p>
+      } @else {
+
+      <div class="space-y-4 ">
+        @for (item of appointments; track item.appointment.id) {
+
+        <div class="border-b border-gray-200 pb-4">
+          <div class="flex justify-between items-start">
+
+            <!-- LEFT -->
+            <div>
+              <h3 class="text-2xl font-semibold text-cyan-700">
+                Appointment with {{ item.patient?.name || 'Patient' }}
+              </h3>
+
+              <p class="text-lg text-gray-600">
+                Date:
+                {{ item.appointment.date | date:'mediumDate' }}
+                at {{ item.appointment.time }}
+              </p>
+
+              <p class="text-sm text-gray-500 capitalize">
+                Status:
+                <span [ngClass]="{
+                        'text-green-600': item.appointment.status === 'Booked',
+                        'text-yellow-600': item.appointment.status === 'Pending',
+                        'text-gray-500': item.appointment.status === 'Completed'
+                      }">
+                  {{ item.appointment.status }}
+                </span>
+              </p>
+
+              <p class="mt-2 text-md font-medium">
+                Symptoms:
+                {{ item.appointment.symptoms || 'N/A' }}
+              </p>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="text-right">
+              @if (item.record) {
+              <button (click)="openCommentForm(item)"
+                class="bg-blue-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-cyan-600 transition">
+                View / Add Notes
+              </button>
+              }
+            </div>
+
+          </div>
+
+          @if (item.record?.doctorNotes) {
+          <p class="mt-3 p-3 bg-blue-50 border-l-4 border-blue-400 text-gray-700">
+            <span class="font-semibold">Your Notes:</span>
+            {{ item.record.doctorNotes }}
+          </p>
+          }
+
+        </div>
+        }
+      </div>
+
+      }
+    </div>
+  </div>
+
+  <!-- 📝 COMMENT MODAL -->
+  @if (activeRecord) {
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-lg">
+
+      <h3 class="text-2xl font-bold mb-4">
+        Add Medical Notes for {{ activeRecord.patient?.name }}
+      </h3>
+
+      <p class="text-sm text-gray-600 mb-4">
+        Initial Symptoms:
+        {{ activeRecord.appointment.symptoms }}
+      </p>
+
+      <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+
+        <label for="doctorNotes" class="block text-gray-700 font-semibold mb-2">
+          Doctor's Notes:
+        </label>
+
+        <textarea id="doctorNotes" formControlName="doctorNotes" rows="5"
+          class="w-full p-3 border rounded-lg focus:ring-cyan-500">
+          </textarea>
+
+        <div class="flex justify-end gap-3 mt-4">
+          <button type="button" (click)="closeCommentForm()" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">
+            Cancel
+          </button>
+
+          <button type="submit" [disabled]="commentForm.invalid"
+            class="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 disabled:bg-gray-400">
+            Save Notes
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  }
+  <br>
+  <br>
+  @if (isAuthenticated) {
+  <button (click)="handleLogout()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold">
+    Logout
+  </button>
+  } @else {
+  <a [routerLink]="['/login']" class="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 font-semibold">
+    Login
+  </a>
+  }
+</section>

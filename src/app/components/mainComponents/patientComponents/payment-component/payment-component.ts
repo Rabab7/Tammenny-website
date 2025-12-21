@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Appointment } from '../../../core/interfaces/models/medical';
 import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MainDataService } from '../../../core/services/main/main-data-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Appointment } from '../../../../core/interfaces/models/medical';
+import { MainDataService } from '../../../../core/services/main/main-data-service';
 
 @Component({
   selector: 'app-payment-component',

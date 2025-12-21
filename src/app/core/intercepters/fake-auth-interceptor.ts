@@ -1,4 +1,3 @@
-// src/app/core/interceptors/fake-auth.interceptor.ts
 
 import {
   HttpEvent,
@@ -11,8 +10,14 @@ import { environment } from '../environments/environment';
 import { delay, mergeMap, Observable, of, throwError } from 'rxjs';
 
 let FAKE_USERS = [
-  { email: 'doctor@test.com', password: '123456', name: 'Dr. Wael', role: 'Doctor' },
-  { email: 'patient@test.com', password: '123456', name: 'Patient Ali', role: 'Patient' },
+  { id: '1', email: 'doctor@test.com', password: '123456', name: 'Dr. Wael', role: 'Doctor' },
+  {
+    id: '101',
+    email: 'patient@test.com',
+    password: '123456',
+    name: 'Patient Ali',
+    role: 'Patient',
+  },
 ];
 
 export const fakeAuthInterceptor: HttpInterceptorFn = (
@@ -32,7 +37,7 @@ export const fakeAuthInterceptor: HttpInterceptorFn = (
           // * if user We create a fake JWT (token) and record the role in localStorage
           if (user) {
             const userPayload = {
-              id: '1a2b3c',
+              id: user.id,
               name: user.name,
               role: user.role,
               iat: 1516239022, // * the iat stands for "Issued At Time" which is the timestamp when the token was issued (fixed in this fake api)
@@ -52,9 +57,10 @@ export const fakeAuthInterceptor: HttpInterceptorFn = (
                   message: 'success',
                   token: fakeToken,
                   user: {
+                    id: user.id,
                     name: user.name,
                     email: user.email,
-                    role: user.role, // 👈 أضيفي هذا السطر ضروري جداً
+                    role: user.role,
                   },
                 },
               })
@@ -74,6 +80,8 @@ export const fakeAuthInterceptor: HttpInterceptorFn = (
         if (req.url.endsWith('/auth/signup') && req.method === 'POST') {
           const { email, password, role, name } = req.body;
 
+          const newId = FAKE_USERS.length > 0? (Math.max(...FAKE_USERS.map((u) => Number(u.id))) + 1).toString(): '1';
+
           if (FAKE_USERS.find((u) => u.email === email)) {
             return throwError(
               () =>
@@ -84,7 +92,9 @@ export const fakeAuthInterceptor: HttpInterceptorFn = (
             );
           }
 
-          FAKE_USERS.push({ email, password, name, role });
+          const newUser = { id: newId, email, password, name, role };
+
+          FAKE_USERS.push(newUser);
 
           localStorage.setItem('role', role);
 
@@ -93,7 +103,7 @@ export const fakeAuthInterceptor: HttpInterceptorFn = (
               status: 200,
               body: {
                 message: 'success',
-                user: { name: name, email: email, role: role },
+                user: { id: newId, name, email, role },
               },
             })
           );

@@ -15,7 +15,7 @@
       "image": "assets/images/doctors/doctors-2.jpg",
       "fee": 400,
       "rating": 4.8
-    } ,
+    },
     {
       "id": "3",
       "name": "Dr. Mohamed Ali",
@@ -92,8 +92,17 @@
   ],
   "api_v1_appointments": [
     {
+      "id": 500,
+      "doctorId": "1",
+      "patientId": 101,
+      "date": "2025-12-25",
+      "time": "10:00 AM",
+      "status": "Confirmed",
+      "symptoms": "Regular checkup"
+    },
+    {
       "id": "201",
-      "doctorId": 1,
+      "doctorId": "1",
       "patientId": 101,
       "date": "2025-12-25",
       "time": "10:00",
@@ -117,6 +126,16 @@
       "time": "07:53",
       "status": "Pending",
       "symptoms": "",
+      "tests": ""
+    },
+    {
+      "id": "82d9",
+      "doctorId": "4",
+      "patientId": "102",
+      "date": "2025-12-23",
+      "time": "16:26",
+      "status": "Pending",
+      "symptoms": "i have a cough pain",
       "tests": ""
     }
   ],

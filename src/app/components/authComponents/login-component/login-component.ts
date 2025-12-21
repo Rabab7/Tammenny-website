@@ -37,14 +37,13 @@ export class LoginComponent {
       this.loading = false;
       if (res.message === 'success' && res.token) {
         
-        // 1. حفظ التوكن
+        // * 1 saved token
         this._AuthService.saveDecodedToken(res.token);
 
-        // 2. الحصول على الـ Role من الاستجابة (Response) مباشرة 
-        // وليس من localStorage لأن الـ API هو المصدر الموثوق
+        
         const userRole = res.user?.role || localStorage.getItem('role'); 
 
-        console.log('User Role is:', userRole); // للتأكد في الـ Console
+        console.log('User Role is:', userRole);
 
         if (userRole === 'Doctor') {
           this._Router.navigate(['/doctor']);

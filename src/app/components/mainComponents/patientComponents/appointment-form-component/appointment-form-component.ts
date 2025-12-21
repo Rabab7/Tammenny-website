@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Appointment, Doctor } from '../../../core/interfaces/models/medical';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MainDataService } from '../../../core/services/main/main-data-service';
-import { AuthService } from '../../../core/services/auth/auth-service';
 import { Router, RouterLink } from '@angular/router';
-import { suggestSpecialty } from '../../../core/constants/symptoms';
 import { NgClass } from '@angular/common';
 import { generate } from 'rxjs';
+import { Appointment, Doctor } from '../../../../core/interfaces/models/medical';
+import { MainDataService } from '../../../../core/services/main/main-data-service';
+import { AuthService } from '../../../../core/services/auth/auth-service';
+import { suggestSpecialty } from '../../../../core/constants/symptoms';
 
 @Component({
   selector: 'app-appointment-form-component',
@@ -48,9 +48,11 @@ export class AppointmentFormComponent  {
   }
 
   ngAfterViewInit(){
-      alert(
+     setTimeout(()=> {
+       alert(
       `If you wish to write down your symptoms, we will refer you to a doctor who specializes in your condition.If you do not wish to do so,please consult a general practitioner or choose a doctor who specializes in your condition.`
     );
+     } , 1000)
   }
 
   loadAllDoctors(): void {

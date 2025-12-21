@@ -1,12 +1,43 @@
-// src/app/core/constants/symptoms.ts (أنشئي هذا الملف)
+
 
 export const SYMPTOM_SPECIALTY_MAP = new Map<string, string>([
- ['headache', 'Neurology'],
- ['chest pain', 'Cardiology'],
- ['fever', 'Pediatrics'],
- ['cough', 'Pediatrics'],
- ['bone', 'Orthopedics'],
- ['fracture', 'Orthopedics'],
+ // Cardiology
+  ['chest pain', 'Cardiology'],
+  ['shortness of breath', 'Cardiology'],
+  ['irregular heartbeat', 'Cardiology'],
+  ['high blood pressure', 'Cardiology'] ,
+
+   // Neurology
+  ['headache', 'Neurology'],
+  ['dizziness', 'Neurology'],
+  ['seizures', 'Neurology'],
+  ['memory loss', 'Neurology'],
+
+   // Hepatology
+  ['jaundice', 'Hepatology'],
+  ['abdominal pain', 'Hepatology'],
+  ['dark urine', 'Hepatology'],
+  ['liver pain', 'Hepatology'],
+
+   // Pediatrics
+  ['fever', 'Pediatrics'],
+  ['vomiting', 'Pediatrics'],
+  ['loss of appetite', 'Pediatrics'],
+  ['child cough', 'Pediatrics'],
+
+   // Eyecare
+  ['blurred vision', 'Eyecare'],
+  ['eye redness', 'Eyecare'],
+  ['eye pain', 'Eyecare'],
+  ['dry eyes', 'Eyecare'],
+
+   // Physical Therapy
+  ['muscle pain', 'Physical Therapy'],
+  ['joint stiffness', 'Physical Therapy'],
+  ['back pain', 'Physical Therapy'],
+  ['post surgery rehab', 'Physical Therapy'],
+
+
 ]);
 
 /**
