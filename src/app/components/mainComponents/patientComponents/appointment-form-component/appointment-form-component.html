@@ -1,77 +1,96 @@
-<section class="py-16 bg-gray-50">
-  <div class="max-w-4xl mx-auto p-8 bg-linear-to-b md:bg-linear-to-r from-white  to-cyan-100   rounded-4xl overflow-hidden min-h-[300px] shadow-2xl ">
-    <h1 class="text-3xl font-bold text-cyan-700 mb-6">Book Your Appointment</h1>
-    
-    <form [formGroup]="appointmentForm" (ngSubmit)="submitAppointment() " class="">
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+<section class="py-16 my-40 ">
+  <div class="max-w-4xl mx-auto p-8 bg-linear-to-b md:bg-linear-to-r from-white to-cyan-100 
+              dark:from-slate-900 dark:to-cyan-950 
+              rounded-4xl overflow-hidden min-h-[300px] shadow-2xl transition-all">
+
+    <h1 class="text-3xl font-bold text-cyan-700 dark:text-cyan-400 mb-6 transition-colors">Book Your Appointment</h1>
+
+    <form [formGroup]="appointmentForm" (ngSubmit)="submitAppointment()" class="space-y-6">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label class="block text-gray-700 font-semibold mb-2">Full Name</label>
-          <input type="text" formControlName="name" class="w-full p-3 border rounded-lg focus:ring-cyan-500" placeholder="Enter your name">
+          <label class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Full Name</label>
+          <input type="text" formControlName="name"
+            class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-hidden transition-all"
+            placeholder="Enter your name">
           @if (appointmentForm.get('name')?.touched && appointmentForm.get('name')?.invalid) {
-            <small class="text-red-500">Name is required</small>
+          <small class="text-red-500 dark:text-red-400">Name is required</small>
           }
         </div>
         <div>
-          <label class="block text-gray-700 font-semibold mb-2">Phone Number</label>
-          <input type="text" formControlName="phone" class="w-full p-3 border rounded-lg focus:ring-cyan-500" placeholder="01xxxxxxxxx">
+          <label class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Phone Number</label>
+          <input type="text" formControlName="phone"
+            class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-hidden transition-all"
+            placeholder="01xxxxxxxxx">
           @if (appointmentForm.get('phone')?.touched && appointmentForm.get('phone')?.invalid) {
-            <small class="text-red-500">Phone is required</small>
+          <small class="text-red-500 dark:text-red-400">Phone is required</small>
           }
         </div>
       </div>
 
-      <div class="mb-4">
-        <label for="symptoms" class="block text-gray-700 font-semibold mb-2">Symptoms:</label>
-        <textarea id="symptoms" formControlName="symptoms" rows="3" class="w-full p-3 border rounded-lg focus:ring-cyan-500" placeholder="Describe how you feel..."></textarea>
+      <div>
+        <label for="symptoms" class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Symptoms:</label>
+        <textarea id="symptoms" formControlName="symptoms" rows="3"
+          class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-hidden transition-all"
+          placeholder="Describe how you feel..."></textarea>
         @if (suggestedSpecialty) {
-          <p class="mt-2 text-md text-green-600 font-medium italic">
-            Based on your symptoms, we suggest **{{ suggestedSpecialty }}** specialists.
-          </p>
+        <p class="mt-2 text-md text-green-600 dark:text-green-400 font-medium italic">
+          Based on your symptoms, we suggest **{{ suggestedSpecialty }}** specialists.
+        </p>
         }
       </div>
 
-      <h2 class="text-xl font-bold mb-4 text-gray-800">Choose a Doctor:</h2>
+      <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-cyan-100">Choose a Doctor:</h2>
+
       @if (loadingDoctors) {
-        <p>Loading doctors...</p>
+      <p class="dark:text-slate-400">Loading doctors...</p>
       } @else {
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          @for (doc of suggestedDoctors; track doc.id) {
-            <label [for]="'doctor-' + doc.id" class="p-4 border rounded-xl cursor-pointer transition flex justify-between items-center" 
-              [ngClass]="{'bg-cyan-50 border-cyan-500 ring-2 ring-cyan-200': appointmentForm.get('selectedDoctorId')?.value === doc.id, 'bg-white border-gray-200': appointmentForm.get('selectedDoctorId')?.value !== doc.id}">
-              <input type="radio" [id]="'doctor-' + doc.id" [value]="doc.id" formControlName="selectedDoctorId" class="hidden">
-              <div>
-                <img [src]="doc.image" class="w-16" alt="">
-              </div>
-              <div>
-                <p class="font-bold text-gray-800">{{ doc.name }}</p>
-                <p class="text-xs text-cyan-600 uppercase">{{ doc.specialty }}</p>
-              </div>
-              <div class="text-right">
-                <p class="font-bold text-green-600">{{ doc.fee }} EGP</p>
-                <p class="text-yellow-500 text-sm">{{ doc.rating }} ⭐</p>
-              </div>
-            </label>
-          }
-        </div>
-        @if (appointmentForm.get('selectedDoctorId')?.touched && appointmentForm.get('selectedDoctorId')?.invalid) {
-          <p class="text-red-500 text-sm mb-4">Please select a doctor</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @for (doc of suggestedDoctors; track doc.id) {
+        <label [for]="'doctor-' + doc.id"
+          class="p-4 border rounded-xl cursor-pointer transition-all flex justify-between items-center" [ngClass]="{
+                     'bg-cyan-50 border-cyan-500 ring-2 ring-cyan-200 dark:bg-cyan-900/30 dark:border-cyan-400 dark:ring-cyan-900/50': appointmentForm.get('selectedDoctorId')?.value === doc.id, 
+                     'bg-white border-gray-200 dark:bg-slate-800 dark:border-slate-700': appointmentForm.get('selectedDoctorId')?.value !== doc.id
+                   }">
+          <input type="radio" [id]="'doctor-' + doc.id" [value]="doc.id" formControlName="selectedDoctorId"
+            class="hidden">
+          <div class="flex items-center gap-4">
+            <img [src]="doc.image" class="w-14 h-14 rounded-full border dark:border-slate-600" alt="">
+            <div>
+              <p class="font-bold text-gray-800 dark:text-white">{{ doc.name }}</p>
+              <p class="text-xs text-cyan-600 dark:text-cyan-400 uppercase font-semibold">{{ doc.specialty }}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-green-600 dark:text-green-400">{{ doc.fee }} EGP</p>
+            <p class="text-yellow-500 text-sm">{{ doc.rating }} ⭐</p>
+          </div>
+        </label>
         }
+      </div>
+      @if (appointmentForm.get('selectedDoctorId')?.touched && appointmentForm.get('selectedDoctorId')?.invalid) {
+      <p class="text-red-500 dark:text-red-400 text-sm mt-2">Please select a doctor</p>
+      }
       }
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <div>
-          <label class="block text-gray-700 font-semibold mb-2">Appointment Date</label>
-          <input type="date" formControlName="date" class="w-full p-3 border rounded-lg focus:ring-cyan-500">
+          <label class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Appointment Date</label>
+          <input type="date" formControlName="date"
+            class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 transition-all [color-scheme:light] dark:[color-scheme:dark]">
         </div>
         <div>
-          <label class="block text-gray-700 font-semibold mb-2">Preferred Time</label>
-          <input type="time" formControlName="time" class="w-full p-3 border rounded-lg focus:ring-cyan-500">
+          <label class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Preferred Time</label>
+          <input type="time" formControlName="time"
+            class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 transition-all [color-scheme:light] dark:[color-scheme:dark]">
         </div>
       </div>
 
-      <button type="submit" [disabled]="appointmentForm.invalid" 
-              class="w-full bg-cyan-600 text-white p-4 rounded-xl font-bold hover:bg-cyan-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all shadow-lg">
+      <button type="submit" [disabled]="appointmentForm.invalid" class="w-full bg-cyan-600 text-white p-4 rounded-xl font-bold hover:bg-cyan-700 
+                     dark:bg-cyan-500 dark:hover:bg-cyan-600 
+                     disabled:bg-gray-300 dark:disabled:bg-slate-800 disabled:cursor-not-allowed 
+                     transition-all shadow-lg active:scale-95 mt-4">
         Proceed to Payment
       </button>
 

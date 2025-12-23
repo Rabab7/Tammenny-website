@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth-service';
+import { ThemeService } from '../../../core/services/theme/theme-service';
 
 @Component({
   selector: 'app-nav-main',
@@ -9,13 +10,24 @@ import { AuthService } from '../../../core/services/auth/auth-service';
   styleUrl: './nav-main.css',
 })
 export class NavMain {
+
   _AuthService = inject(AuthService)
   _Router = inject(Router)
-    handleLogout(): void {
-   
-    this._AuthService.logout();
+  themeService = inject(ThemeService);
 
-   
+  
+  isMenuOpen: boolean = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  
+  toggleTheme() {
+    this.themeService.toggleTheme();
+  }
+
+    handleLogout(): void {
+    this._AuthService.logout();
     this._Router.navigate(['/login']);
   }
   

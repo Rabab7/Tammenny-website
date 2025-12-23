@@ -1,37 +1,51 @@
+<nav class="fixed top-0 left-0 right-0 z-50 p-5 flex justify-between lg:justify-evenly items-center 
+            bg-linear-to-b md:bg-linear-to-r from-white to-cyan-200 dark:from-slate-900 dark:to-cyan-950 
+            shadow-2xl rounded-bl-4xl rounded-br-4xl transition-all duration-500">
 
- <nav class="nav bg-linear-to-b md:bg-linear-to-r from-white  to-cyan-200  shadow-2xl rounded-bl-4xl rounded-br-4xl p-5 top-0 left-0 right-0 z-50  flex justify-evenly items-center ">
-        <div class="navLogo flex">
-            <h1
-                class=" text-cyan-700 text-4xl ml-6 tracking-wide font-bold uppercase pr-4 border-r-[2.3px] border-r-white/40">
-                tammenny</h1>
+    <div class="navLogo flex items-center">
+        <h1 routerLink="/home" class="text-cyan-700 dark:text-cyan-400 cursor-pointer text-4xl ml-6 tracking-wide font-bold uppercase pr-4 border-r-[2.3px] border-r-cyan-300 dark:border-r-slate-700">
+            tammenny
+        </h1>
+    </div>
 
-        </div>
-        <div class="navLinks ">
-            <ul class="hidden text-blue-600  lg:flex justify-evenly gap-6  text-[22px] font-semibold cursor-pointer">
-                <li>
-                    <a  routerLink="login">login</a>
-                </li>
-                <li>
-                    <a routerLink="register">register</a>
-                </li>
-                
-            </ul>
-        </div>
+    <div class="navLinks hidden lg:block">
+        <ul class="flex justify-evenly gap-6 text-[22px] font-semibold">
+            <li><a routerLink="/login" routerLinkActive="!text-black dark:!text-cyan-400" class="text-blue-600 dark:text-slate-100 hover:text-cyan-500 transition-colors">Login</a></li>
+            <li><a routerLink="/register" routerLinkActive="!text-black dark:!text-cyan-400" class="text-blue-600 dark:text-slate-100 hover:text-cyan-500 transition-colors">Register</a></li>
+            
+        </ul>
+    </div>
 
-        <!-- <button class="lg:hidden mx-auto me-7 sm:me-16  md:me-16 menuIcon cursor-pointer">
-            <i class="fa-solid fa-bars fa-2xl"></i>
-        </button> -->
+    <div class="flex items-center gap-4">
+        <button (click)="themeService.toggleTheme()" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-200 dark:bg-slate-800 transition-all">
+            @if (themeService.isDarkMode()) {
+                <i class="fa-solid fa-sun text-yellow-400 text-xl"></i>
+            } @else {
+                <i class="fa-solid fa-moon text-cyan-700 text-xl"></i>
+            }
+        </button>
 
-        <!-- dropDown menu -->
-        <div class="dropNavLinks ">
-            <ul
-                class="dropDownMenu lg:hidden flex flex-col items-center  gap-8 rounded-br-4xl rounded-bl-4xl mx-5 absolute left-0 top-24 right-0 bg-main boxShadow p-6 text-white text-[17px] font-semibold z-50 cursor-pointer">
-               <li>
-                    <a class="active " href="#home">login</a>
-                </li>
-                <li>
-                    <a href="#services">register</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <button (click)="toggleMenu()" class="lg:hidden text-cyan-800 dark:text-cyan-400 cursor-pointer focus:outline-none">
+            <i class="fa-solid transition-all duration-300 text-3xl" [class.fa-bars]="!isMenuOpen" [class.fa-xmark]="isMenuOpen"></i>
+        </button>
+    </div>
+
+    @if (isMenuOpen) {
+    <div class="absolute left-0 top-full right-0 mx-5 mt-2 p-6 lg:hidden
+                bg-white dark:bg-slate-800 shadow-2xl rounded-3xl border border-cyan-100 dark:border-slate-700
+                flex flex-col items-center gap-6 z-50 animate-fade-in-down">
+
+        <ul class="w-full text-center space-y-2">
+            <li class="w-full">
+                <a routerLink="/login" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
+                   (click)="isMenuOpen = false" class="py-3 px-4 rounded-xl text-xl font-bold text-slate-800 dark:text-slate-200 block transition-all">Login</a>
+            </li>
+             <hr class="my-4 border-slate-100 dark:border-slate-700">
+            <li class="w-full">
+                <a routerLink="/register" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
+                   (click)="isMenuOpen = false" class="py-3 px-4 rounded-xl text-xl font-bold text-slate-800 dark:text-slate-200 block transition-all">Register</a>
+            </li>
+        </ul>
+    </div>
+    }
+</nav>

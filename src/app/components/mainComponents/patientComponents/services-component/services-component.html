@@ -1,75 +1,89 @@
 <section
-  class="p-16 my-16  bg-linear-to-b md:bg-linear-to-r from-white  to-cyan-100  shadow-2xl rounded-4xl overflow-hidden min-h-[300px]">
+  class="p-16 my-40  bg-linear-to-b md:bg-linear-to-r from-white to-cyan-100 
+         dark:from-slate-900 dark:to-cyan-950 
+         shadow-2xl dark:shadow-cyan-900/10 rounded-4xl overflow-hidden min-h-[300px] transition-all duration-500">
+  
   <div class="max-w-6xl mx-auto">
 
     <div class="text-center my-8 sec-title">
-          <h2 class="text-4xl font-bold capitalize text-sky-900">Our Services</h2>
-          <div class="relative mt-2">
-            <div class="w-28 h-0.5 bg-gray-400 mx-auto "></div>
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-11 h-0.5 bg-sky-500"></div>
-          </div>
+      <h2 class="text-4xl font-bold capitalize text-sky-900 dark:text-cyan-400">Our Services</h2>
+      <div class="relative mt-2">
+        <div class="w-28 h-0.5 bg-gray-400 dark:bg-slate-700 mx-auto"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-11 h-0.5 bg-sky-500 dark:bg-cyan-500"></div>
+      </div>
+    </div>
+    <p class="text-slate-800 dark:text-slate-400 capitalize text-xl text-center my-10">
+      Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit
+    </p>
+
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-5 lg:p-0">
+      
+      <div class="shadow-sm border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 w-full p-8 group hover:bg-cyan-500 dark:hover:bg-cyan-600 rounded-3xl transition-all duration-300">
+        <div class="relative w-16 h-16 flex items-center justify-center group-hover:bg-white bg-cyan-500 dark:bg-cyan-600 rounded-md shadow-md mx-auto transition-colors">
+          <div class="absolute -left-2 w-16 h-16 bg-gray-400 dark:bg-slate-900 rounded-md -z-10 group-hover:bg-cyan-200/50"></div>
+          <i class="fas fa-heartbeat text-white fa-2x group-hover:text-cyan-500 z-30 transition-colors"></i>
         </div>
-        <p class="text-slate-800 capitalize text-xl  text-center my-10">Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-        <div class="container mx-auto  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 p-5 lg:p-0">
-          <div class="shadow-sm border border-gray-300   bg-white w-full p-3 group hover:bg-cyan-500 rounded-3xl">
-            <div class="relative   w-16 h-16 flex items-center justify-center group-hover:bg-white  bg-cyan-500  rounded-md shadow-md mx-auto">
-              <div class="absolute -left-2  w-16 h-16 bg-gray-400 rounded-md -z-20"></div>
-              <i class="fas fa-heartbeat text-white fa-2x group-hover:text-cyan-500  z-30"></i>
-            </div>
-            <h2 class="text-2xl font-black  text-cyan-900 text-center mt-7 group-hover:text-white">Nesciunt Mete</h2>
-            <p class="text-slate-800 capitalize text-sm  text-center my-6 group-hover:text-white ">Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure perferendis tempore et consequatur.</p>
-          </div>
+        <h2 class="text-2xl font-black text-cyan-900 dark:text-cyan-100 text-center mt-7 group-hover:text-white transition-colors">Nesciunt Mete</h2>
+        <p class="text-slate-800 dark:text-slate-400 capitalize text-sm text-center my-6 group-hover:text-white transition-colors">
+          Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure perferendis.
+        </p>
+      </div>
 
-          <div class="shadow-sm border border-gray-300 bg-white w-full p-3 group hover:bg-cyan-500 rounded-3xl">
-            <div class="relative   w-16 h-16 flex items-center justify-center group-hover:bg-white  bg-cyan-500  rounded-md shadow-md mx-auto">
-              <div class="absolute -left-2  w-16 h-16 bg-gray-400 rounded-md -z-20"></div>
-              <i class="fas fa-pills text-white fa-2x group-hover:text-cyan-500 z-30"></i>
-            </div>
-            <h2 class="text-2xl font-black  text-cyan-900 group-hover:text-white text-center mt-7">Eosle Commodi</h2>
-            <p class="text-slate-800 capitalize text-sm  group-hover:text-white text-center my-6 ">Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non ut nesciunt dolorem.</p>
-          </div>
+      <div class="shadow-sm border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 w-full p-8 group hover:bg-cyan-500 dark:hover:bg-cyan-600 rounded-3xl transition-all duration-300">
+        <div class="relative w-16 h-16 flex items-center justify-center group-hover:bg-white bg-cyan-500 dark:bg-cyan-600 rounded-md shadow-md mx-auto transition-colors">
+          <div class="absolute -left-2 w-16 h-16 bg-gray-400 dark:bg-slate-900 rounded-md -z-10 group-hover:bg-cyan-200/50"></div>
+          <i class="fas fa-pills text-white fa-2x group-hover:text-cyan-500 z-30 transition-colors"></i>
+        </div>
+        <h2 class="text-2xl font-black text-cyan-900 dark:text-cyan-100 text-center mt-7 group-hover:text-white">Eosle Commodi</h2>
+        <p class="text-slate-800 dark:text-slate-400 capitalize text-sm text-center my-6 group-hover:text-white">
+          Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non.
+        </p>
+      </div>
 
-          <div class="shadow-sm border border-gray-300 bg-white w-full p-3 group hover:bg-cyan-500 rounded-3xl">
-            <div class="relative   w-16 h-16 flex items-center justify-center  bg-cyan-500 group-hover:bg-white  rounded-md shadow-sm mx-auto">
-              <div class="absolute -left-2  w-16 h-16 bg-gray-400 rounded-md -z-20"></div>
-              <i class="fas fa-hospital-user text-white fa-2x group-hover:text-cyan-500  z-30"></i>
-            </div>
-            <h2 class="text-2xl font-black  text-cyan-900 group-hover:text-white text-center mt-7">Ledo Markt</h2>
-            <p class="text-slate-800 capitalize text-sm group-hover:text-white  text-center my-6 ">Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id voluptas adipisci eos earum corrupti.</p>
-          </div>
+      <div class="shadow-sm border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 w-full p-8 group hover:bg-cyan-500 dark:hover:bg-cyan-600 rounded-3xl transition-all duration-300">
+        <div class="relative w-16 h-16 flex items-center justify-center group-hover:bg-white bg-cyan-500 dark:bg-cyan-600 rounded-md shadow-md mx-auto transition-colors">
+          <div class="absolute -left-2 w-16 h-16 bg-gray-400 dark:bg-slate-900 rounded-md -z-10 group-hover:bg-cyan-200/50"></div>
+          <i class="fas fa-hospital-user text-white fa-2x group-hover:text-cyan-500 z-30 transition-colors"></i>
+        </div>
+        <h2 class="text-2xl font-black text-cyan-900 dark:text-cyan-100 text-center mt-7 group-hover:text-white">Ledo Markt</h2>
+        <p class="text-slate-800 dark:text-slate-400 capitalize text-sm text-center my-6 group-hover:text-white">
+          Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id voluptas adipisci.
+        </p>
+      </div>
 
-          <div class="shadow-sm border border-gray-300 bg-white w-full p-3 group hover:bg-cyan-500 rounded-3xl">
-            <div class="relative   w-16 h-16 flex items-center justify-center  bg-cyan-500 group-hover:bg-white  rounded-md shadow-sm mx-auto">
-              <div class="absolute -left-2  w-16 h-16 bg-gray-400 rounded-md -z-20"></div>
-              <i class="fas fa-dna text-white fa-2x group-hover:text-cyan-500  z-30"></i>
-            </div>
-            <h2 class="text-2xl font-black  text-cyan-900 group-hover:text-white text-center mt-7">Asperiores Commodit</h2>
-            <p class="text-slate-800 capitalize text-sm group-hover:text-white  text-center my-6 ">Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident adipisci neque.</p>
-          </div>
+      <div class="shadow-sm border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 w-full p-8 group hover:bg-cyan-500 dark:hover:bg-cyan-600 rounded-3xl transition-all duration-300">
+        <div class="relative w-16 h-16 flex items-center justify-center group-hover:bg-white bg-cyan-500 dark:bg-cyan-600 rounded-md shadow-md mx-auto transition-colors">
+          <div class="absolute -left-2 w-16 h-16 bg-gray-400 dark:bg-slate-900 rounded-md -z-10 group-hover:bg-cyan-200/50"></div>
+          <i class="fas fa-dna text-white fa-2x group-hover:text-cyan-500 z-30 transition-colors"></i>
+        </div>
+        <h2 class="text-2xl font-black text-cyan-900 dark:text-cyan-100 text-center mt-7 group-hover:text-white">Asperiores Commodit</h2>
+        <p class="text-slate-800 dark:text-slate-400 capitalize text-sm text-center my-6 group-hover:text-white">
+          Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident.
+        </p>
+      </div>
 
-          <div class="shadow-sm border border-gray-300 bg-white w-full p-3 group hover:bg-cyan-500 rounded-3xl">
-            <div class="relative   w-16 h-16 flex items-center justify-center  bg-cyan-500 group-hover:bg-white  rounded-md shadow-sm mx-auto">
-              <div class="absolute -left-2  w-16 h-16 bg-gray-400 rounded-md -z-20"></div>
-              <i class="fas fa-wheelchair text-white fa-2x group-hover:text-cyan-500  z-30"></i>
-            </div>
-            <h2 class="text-2xl font-black  text-cyan-900 group-hover:text-white  text-center mt-7">Velit Doloremque</h2>
-            <p class="text-slate-800 capitalize text-sm group-hover:text-white   text-center my-6 ">Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem alias eius labore.</p>
-          </div>
+      <div class="shadow-sm border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 w-full p-8 group hover:bg-cyan-500 dark:hover:bg-cyan-600 rounded-3xl transition-all duration-300">
+        <div class="relative w-16 h-16 flex items-center justify-center group-hover:bg-white bg-cyan-500 dark:bg-cyan-600 rounded-md shadow-md mx-auto transition-colors">
+          <div class="absolute -left-2 w-16 h-16 bg-gray-400 dark:bg-slate-900 rounded-md -z-10 group-hover:bg-cyan-200/50"></div>
+          <i class="fas fa-wheelchair text-white fa-2x group-hover:text-cyan-500 z-30 transition-colors"></i>
+        </div>
+        <h2 class="text-2xl font-black text-cyan-900 dark:text-cyan-100 text-center mt-7 group-hover:text-white">Velit Doloremque</h2>
+        <p class="text-slate-800 dark:text-slate-400 capitalize text-sm text-center my-6 group-hover:text-white">
+          Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at.
+        </p>
+      </div>
 
-          <div class="shadow-sm border border-gray-300 bg-white w-full p-3 group hover:bg-cyan-500 rounded-3xl">
-            <div class="relative   w-16 h-16 flex items-center justify-center  bg-cyan-500 group-hover:bg-white  rounded-md shadow-md mx-auto">
-              <div class="absolute -left-2  w-16 h-16 bg-gray-400 rounded-md -z-20"></div>
-              <i class="fas fa-notes-medical text-white fa-2x group-hover:text-cyan-500   z-30"></i>
-            </div>
-            <h2 class="text-2xl font-black  text-cyan-900 group-hover:text-white  text-center mt-7">Dolori Architecto</h2>
-            <p class="text-slate-800 capitalize text-sm group-hover:text-white   text-center my-6 ">Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti recusandae ducimus enim.</p>
-          </div>
+      <div class="shadow-sm border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 w-full p-8 group hover:bg-cyan-500 dark:hover:bg-cyan-600 rounded-3xl transition-all duration-300">
+        <div class="relative w-16 h-16 flex items-center justify-center group-hover:bg-white bg-cyan-500 dark:bg-cyan-600 rounded-md shadow-md mx-auto transition-colors">
+          <div class="absolute -left-2 w-16 h-16 bg-gray-400 dark:bg-slate-900 rounded-md -z-10 group-hover:bg-cyan-200/50"></div>
+          <i class="fas fa-notes-medical text-white fa-2x group-hover:text-cyan-500 z-30 transition-colors"></i>
+        </div>
+        <h2 class="text-2xl font-black text-cyan-900 dark:text-cyan-100 text-center mt-7 group-hover:text-white">Dolori Architecto</h2>
+        <p class="text-slate-800 dark:text-slate-400 capitalize text-sm text-center my-6 group-hover:text-white">
+          Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti.
+        </p>
+      </div>
 
-          </div>
-
-   
+    </div>
   </div>
-
- 
-
 </section>

@@ -10,13 +10,7 @@ import { delay, mergeMap, Observable, of, throwError } from 'rxjs';
 
 let FAKE_USERS = [
   { id: '1', email: 'doctor@test.com', password: '123456', name: 'Dr. Wael', role: 'Doctor' },
-  {
-    id: '101',
-    email: 'patient@test.com',
-    password: '123456',
-    name: 'Patient Ali',
-    role: 'Patient',
-  },
+  {id: '101', email: 'patient@test.com', password: '123456',name: 'Patient Ali',role: 'Patient',},
 ];
 
 export const fakeAuthInterceptor: HttpInterceptorFn = (
