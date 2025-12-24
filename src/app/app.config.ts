@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -11,6 +11,8 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import {environment}  from './core/environments/environment';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { fakeAuthInterceptor } from './core/intercepters/fake-auth-interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { loadingInterceptoeInterceptor } from './core/intercepters/loading/loading-interceptoe-interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -20,11 +22,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideClientHydration(withEventReplay()),
     provideHttpClient(
       withInterceptors([
-        fakeAuthInterceptor // 💡 يتم تطبيقه على جميع الطلبات
-      ])
-    )
-    // provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // provideAuth(() => getAuth()),
-    // provideFirestore(() => getFirestore())
+        fakeAuthInterceptor 
+      ]),
+     
+    ),
+
+   
   ]
 };

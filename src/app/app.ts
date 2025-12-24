@@ -4,6 +4,7 @@ import { RegisterComponent } from "./components/authComponents/register-componen
 import { LoginComponent } from "./components/authComponents/login-component/login-component";
 import { AuthComponent } from "./layouts/auth-component/auth-component";
 import { NavAuth } from "./components/authComponents/nav-auth/nav-auth";
+import { NgxSpinnerComponent } from "ngx-spinner";
 
 @Component({
   selector: 'app-root',
