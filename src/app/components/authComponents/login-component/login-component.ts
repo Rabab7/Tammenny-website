@@ -20,6 +20,7 @@ export class LoginComponent {
   constructor(private _AuthService: AuthService, private _Router: Router) {}
   loading: boolean = false;
   errorText!: string;
+  successText!:string
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -43,16 +44,22 @@ export class LoginComponent {
         
         const userRole = res.user?.role || localStorage.getItem('role'); 
 
-        console.log('User Role is:', userRole);
-
         if (userRole === 'Doctor') {
-          this._Router.navigate(['/doctor-layout/dashboard']);
+          setTimeout(()=>{
+            this._Router.navigate(['/doctor-layout/dashboard']);
+          }, 1000)
         } else if (userRole === 'Patient') {
-          this._Router.navigate(['/patient-layout/home']);
+          setTimeout(() =>{
+            this._Router.navigate(['/patient-layout/home']);
+          } , 1000)
         } else {
-          this._Router.navigate(['/patient-layout/home']);
+          setTimeout(() => {
+            this._Router.navigate(['/patient-layout/home']);
+          } , 1000)
         }
       }
+
+      this.successText = 'Login Successful'
     },
     error: (err) => {
       this.errorText = err.error?.message || 'Login failed';

@@ -21,6 +21,7 @@ export class RegisterComponent {
  constructor(private _AuthService: AuthService, private _Router: Router) {}
  loading: boolean = false;
  errorText!: string;
+ successText!: string;
 
  registerForm: FormGroup = new FormGroup(
   {
@@ -62,7 +63,7 @@ export class RegisterComponent {
       
       localStorage.setItem('role', userRole);
 
-      this.errorText = 'Registration successful. Redirecting...';
+      this.successText = 'Registration successful';
       this.loading = false;
 
       setTimeout(() => {

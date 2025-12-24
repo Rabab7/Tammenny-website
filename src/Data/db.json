@@ -417,12 +417,16 @@
       "id": "500"
     },
     {
-      "id": "e35b",
-      "patientId": "101",
-      "doctorId": "1",
-      "date": "2025-12-24",
-      "doctorNotes": "ssss",
-      "diagnosis": "Initial Diagnosis"
+      "doctorNotes": "you must make analsisy",
+      "id": "e35b"
+    },
+    {
+      "doctorNotes": "",
+      "id": "fbbf"
+    },
+    {
+      "doctorNotes": "",
+      "id": "a998"
     }
   ]
 }

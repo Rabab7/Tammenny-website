@@ -4,6 +4,7 @@ import { MainDataService } from '../../../../core/services/main/main-data-servic
 import { AuthService } from '../../../../core/services/auth/auth-service';
 import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
 import { DoctorSlotsComponent } from '../doctor-slots-component/doctor-slots-component';
 
 @Component({
@@ -66,7 +67,6 @@ export class DoctorDashboard {
     });
   }
 
-
   submitComment(): void {
     if (!this.activeRecord || this.commentForm.invalid) return;
 
@@ -79,7 +79,15 @@ export class DoctorDashboard {
         next: () => {
           this.activeRecord.record.doctorNotes = notes;
           this.closeCommentForm();
-          alert('Notes updated!');
+          Swal.fire({
+            title: 'Updated!',
+            text: 'Notes updated!',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#0891b2',
+            background: document.documentElement.classList.contains('dark') ? '#0f172a' : '#fff',
+            color: document.documentElement.classList.contains('dark') ? '#fff' : '#000',
+          });
         },
       });
     }
@@ -98,19 +106,54 @@ export class DoctorDashboard {
           // * We update the element in the array immediately so that the "Edit" button appears instead of "Add"
           this.activeRecord.record = res;
           this.closeCommentForm();
-          alert('New record created and notes saved!');
+          Swal.fire({
+            title: 'Creation!',
+            text: 'New record created and notes saved!',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#0891b2',
+            background: document.documentElement.classList.contains('dark') ? '#0f172a' : '#fff',
+            color: document.documentElement.classList.contains('dark') ? '#fff' : '#000',
+          });
           this.loadAppointments(); // * Reload to ensure data linking
         },
       });
     }
   }
 
-  
+  // * delete notes
+  deleteNote(item: any): void {
+    if (confirm('Are you sure you want to delete this note?')) {
+      const recordId = item.record.id;
+
+      // * We update the log and clear the notes.
+      this.dataService.updateMedicalRecord(recordId, { doctorNotes: '' }).subscribe({
+        next: () => {
+          // * update ui
+          item.record.doctorNotes = '';
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Note deleted successfully',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#0891b2', 
+            background: document.documentElement.classList.contains('dark') ? '#0f172a' : '#fff',
+            color: document.documentElement.classList.contains('dark') ? '#fff' : '#000',
+          });
+        },
+        error: (err) => {
+          console.error('Error deleting note:', err);
+          alert('Failed to delete note');
+        },
+      });
+    }
+  }
+
   finalizeAction(message: string): void {
     alert(message);
     this.activeRecord = null;
     this.commentForm.reset();
-    this.loadAppointments(); 
+    this.loadAppointments();
   }
 
   closeCommentForm(): void {

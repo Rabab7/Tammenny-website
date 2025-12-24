@@ -33,11 +33,18 @@
                             class="bg-cyan-100 dark:bg-slate-800/50 shadow-2xl rounded-4xl p-5 w-full mx-auto border border-cyan-400 dark:border-cyan-700"
                             [formGroup]="registerForm" (ngSubmit)="register()">
 
-                            @if (errorText)
+                            @if (successText)
                             {
                             <div class="my-4 w-full ">
                                 <p
-                                    class="text-center w-full md:w-1/2 whitespace-nowrap font-bold text-lg rounded-lg bg-red-400 mx-auto p-2">
+                                    class="text-center w-full  whitespace-nowrap font-bold  text-lg rounded-lg bg-cyan-400 mx-auto p-2">
+                                    {{successText}}</p>
+                            </div>
+                            }
+                            @if (errorText ) {
+                            <div class="my-4 w-full ">
+                                <p
+                                    class="text-center w-full  whitespace-nowrap font-bold text-lg rounded-lg bg-red-400 mx-auto p-2">
                                     {{errorText}}</p>
                             </div>
                             }

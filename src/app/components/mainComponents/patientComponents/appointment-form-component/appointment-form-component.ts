@@ -7,6 +7,7 @@ import { Appointment, Doctor } from '../../../../core/interfaces/models/medical'
 import { MainDataService } from '../../../../core/services/main/main-data-service';
 import { AuthService } from '../../../../core/services/auth/auth-service';
 import { suggestSpecialty } from '../../../../core/constants/symptoms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-appointment-form-component',
@@ -60,7 +61,7 @@ export class AppointmentFormComponent {
       }
     });
 
-    // * Monitoring specialty and symptoms 
+    // * Monitoring specialty and symptoms
     this.appointmentForm
       .get('specialty')
       ?.valueChanges.subscribe((spec) => this.filterDoctors(spec));
@@ -73,7 +74,7 @@ export class AppointmentFormComponent {
     });
   }
 
-  // * 1. method that get all doctors 
+  // * 1. method that get all doctors
   loadAllDoctors(): void {
     this.loadingDoctors = true;
     this._DataService.getDoctors().subscribe({
@@ -120,7 +121,15 @@ export class AppointmentFormComponent {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      alert(`Choose a specialty or describe your symptoms to find the right doctor.`);
+      Swal.fire({
+        title: 'Choose!',
+        text: `Choose a specialty or describe your symptoms to find the right doctor.`,
+        icon: 'success',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#0891b2',
+        background: document.documentElement.classList.contains('dark') ? '#0f172a' : '#fff',
+        color: document.documentElement.classList.contains('dark') ? '#fff' : '#000',
+      });
     }, 1000);
   }
 
