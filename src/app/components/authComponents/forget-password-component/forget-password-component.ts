@@ -64,7 +64,7 @@ export class ForgetPasswordComponent {
         if (res.message === 'success') {
           this.errorText = 'Code verified. Redirecting to reset password...';
           
-          this._Router.navigate(['/resetPassword'], { queryParams: { email: this.userEmail } });
+          this._Router.navigate(['/auth/resetPassword'], { queryParams: { email: this.userEmail } });
         } else {
           this.errorText = res.message || 'Invalid code.';
         }
