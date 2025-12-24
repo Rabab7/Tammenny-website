@@ -1,4 +1,3 @@
-
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -8,20 +7,20 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class MainDataService {
-  constructor(private _HttpClient: HttpClient) { }
+  constructor(private _HttpClient: HttpClient) {}
 
   getDoctors(query?: string): Observable<any> {
-    return this._HttpClient.get(`${environment.baseUrl}_doctors${query || ''}`); 
+    return this._HttpClient.get(`${environment.baseUrl}_doctors${query || ''}`);
   }
 
   getDepartments(): Observable<any> {
-    return this._HttpClient.get(`${environment.baseUrl}_departments`); 
+    return this._HttpClient.get(`${environment.baseUrl}_departments`);
   }
 
   // get doctor appoinments
   getDoctorAppointments(doctorId: any): Observable<any> {
     // use _appointments?doctorId=id
-    return this._HttpClient.get(`${environment.baseUrl}_appointments?doctorId=${doctorId}`); 
+    return this._HttpClient.get(`${environment.baseUrl}_appointments?doctorId=${doctorId}`);
   }
 
   getPatientRecords(patientId: any): Observable<any> {
@@ -29,14 +28,49 @@ export class MainDataService {
   }
 
   makeAppointment(appointmentData: object): Observable<any> {
-    return this._HttpClient.post(`${environment.baseUrl}_appointments`, appointmentData); 
+    return this._HttpClient.post(`${environment.baseUrl}_appointments`, appointmentData);
   }
 
   updateMedicalRecord(recordId: any, updateData: object): Observable<any> {
-    return this._HttpClient.put(`${environment.baseUrl}_medicalRecords/${recordId}`, updateData); 
+    return this._HttpClient.put(`${environment.baseUrl}_medicalRecords/${recordId}`, updateData);
   }
 
   getPatientById(id: any): Observable<any> {
     return this._HttpClient.get(`${environment.baseUrl}_patients/${id}`);
+  }
+
+  // * Creating a new medical record for a patient for the first time
+  createMedicalRecord(recordData: object): Observable<any> {
+    return this._HttpClient.post(`${environment.baseUrl}_medicalRecords`, recordData);
+  }
+
+  // * get available slots for a doctor
+  getAvailableSlots(doctorId: string): Observable<any[]> {
+    return this._HttpClient.get<any[]>(`${environment.baseUrl}_doctor_slots?doctorId=${doctorId}`);
+  }
+
+  // * add new slot for a doctor
+  addSlot(slotData: any): Observable<any> {
+    return this._HttpClient.post(`${environment.baseUrl}_doctor_slots`, slotData);
+  }
+
+  // * get all slots that doctor added to himself
+  getDoctorOwnSlots(doctorId: string): Observable<any[]> {
+    return this._HttpClient.get<any[]>(`${environment.baseUrl}_doctor_slots?doctorId=${doctorId}`);
+  }
+
+  // delete available slot
+  deleteSlot(slotId: string): Observable<any> {
+    return this._HttpClient.delete(`${environment.baseUrl}_doctor_slots/${slotId}`);
+  }
+
+  // * get specific appoinment
+  getSlotById(slotId: string): Observable<any> {
+    return this._HttpClient.get(`${environment.baseUrl}api_v1_doctor_slots/${slotId}`);
+  }
+
+  // * paritial update
+  updateSlot(slotId: string, data: any): Observable<any> {
+    return this._HttpClient.patch(`${environment.baseUrl}api_v1_doctor_slots/${slotId}`, data);
   }
 }

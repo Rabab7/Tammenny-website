@@ -27,7 +27,7 @@ export class NavAuth {
   
       handleLogout(): void {
       this._AuthService.logout();
-      this._Router.navigate(['/login']);
+      this._Router.navigate(['/auth/login']);
     }
     
    

@@ -3,17 +3,17 @@
             shadow-2xl rounded-bl-4xl rounded-br-4xl transition-all duration-500">
 
     <div class="navLogo flex items-center">
-        <h1 routerLink="/home" class="text-cyan-700 dark:text-cyan-400 cursor-pointer text-4xl ml-6 tracking-wide font-bold uppercase pr-4 border-r-[2.3px] border-r-cyan-300 dark:border-r-slate-700">
+        <h1 routerLink="/home" class="text-cyan-700 dark:text-cyan-400 cursor-pointer text-2xl md:text-4xl  ml-6 tracking-wide font-bold uppercase pr-4 border-r-[2.3px] border-r-cyan-300 dark:border-r-slate-700">
             tammenny
         </h1>
     </div>
 
     <div class="navLinks hidden lg:block">
         <ul class="flex justify-evenly gap-6 text-[22px] font-semibold">
-            <li><a routerLink="/about" routerLinkActive="!text-cyan-600 dark:!text-cyan-400" class="text-blue-600 dark:text-slate-300 hover:text-cyan-500 transition-colors">About</a></li>
-            <li><a routerLink="/services" routerLinkActive="!text-cyan-600 dark:!text-cyan-400" class="text-blue-600 dark:text-slate-300 hover:text-cyan-500 transition-colors">Services</a></li>
-            <li><a routerLink="/departements" routerLinkActive="!text-cyan-600 dark:!text-cyan-400" class="text-blue-600 dark:text-slate-300 hover:text-cyan-500 transition-colors">Departments</a></li>
-            <li><a routerLink="/doctors" routerLinkActive="!text-cyan-600 dark:!text-cyan-400" class="text-blue-600 dark:text-slate-300 hover:text-cyan-500 transition-colors">Doctors</a></li>
+            <li><a routerLink="/patient-layout/about" routerLinkActive="!text-cyan-600 dark:!text-cyan-400" class="text-blue-600 dark:text-slate-300 hover:text-cyan-500 transition-colors">About</a></li>
+            <li><a routerLink="/patient-layout/services" routerLinkActive="!text-cyan-600 dark:!text-cyan-400" class="text-blue-600 dark:text-slate-300 hover:text-cyan-500 transition-colors">Services</a></li>
+            <li><a routerLink="/patient-layout/departements" routerLinkActive="!text-cyan-600 dark:!text-cyan-400" class="text-blue-600 dark:text-slate-300 hover:text-cyan-500 transition-colors">Departments</a></li>
+            <li><a routerLink="/patient-layout/doctors" routerLinkActive="!text-cyan-600 dark:!text-cyan-400" class="text-blue-600 dark:text-slate-300 hover:text-cyan-500 transition-colors">Doctors</a></li>
         </ul>
     </div>
 
@@ -30,8 +30,10 @@
             @if (isAuthenticated) {
                 <button (click)="handleLogout()" class="px-5 py-2 bg-cyan-500 text-white rounded-xl font-bold hover:bg-cyan-600 transition-all shadow-md">Logout</button>
             } @else {
-                <a routerLink="/login" class="px-5 py-2 bg-cyan-600 text-white rounded-xl font-bold hover:bg-cyan-700 transition-all shadow-md">Login</a>
+                <a routerLink="/auth/login" class="px-5 py-2 bg-cyan-600 text-white rounded-xl font-bold hover:bg-cyan-700 transition-all shadow-md">Login</a>
             }
+
+            <button routerLink="/patient-layout/appointment" class="px-5 py-2 ml-3 bg-cyan-500 text-white rounded-xl font-bold hover:bg-cyan-600 transition-all shadow-md">Make Appointment</button>
         </div>
 
         <button (click)="toggleMenu()" class="lg:hidden text-cyan-800 dark:text-cyan-400 cursor-pointer focus:outline-none">
@@ -46,22 +48,22 @@
 
         <ul class="w-full text-center space-y-2">
             <li class="w-full">
-                <a routerLink="/about" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
+                <a routerLink="/patient-layout/about" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
                    (click)="isMenuOpen = false" class="py-3 px-4 rounded-xl text-xl font-bold text-slate-800 dark:text-slate-200 block transition-all">About</a>
             </li>
              <hr class="my-4 border-slate-100 dark:border-slate-700">
             <li class="w-full">
-                <a routerLink="/services" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
+                <a routerLink="/patient-layout/services" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
                    (click)="isMenuOpen = false" class="py-3 px-4 rounded-xl text-xl font-bold text-slate-800 dark:text-slate-200 block transition-all">Services</a>
             </li>
              <hr class="my-4 border-slate-100 dark:border-slate-700">
             <li class="w-full">
-                <a routerLink="/departements" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
+                <a routerLink="/patient-layout/departements" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
                    (click)="isMenuOpen = false" class="py-3 px-4 rounded-xl text-xl font-bold text-slate-800 dark:text-slate-200 block transition-all">Departments</a>
             </li>
              <hr class="my-4 border-slate-100 dark:border-slate-700">
             <li class="w-full">
-                <a routerLink="/doctors" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
+                <a routerLink="/patient-layout/doctors" routerLinkActive="bg-cyan-50 dark:bg-cyan-900/30 !text-cyan-600 dark:!text-cyan-400" 
                    (click)="isMenuOpen = false" class="py-3 px-4 rounded-xl text-xl font-bold text-slate-800 dark:text-slate-200 block transition-all">Doctors</a>
             </li>
             
@@ -73,6 +75,8 @@
                 } @else {
                     <a routerLink="/login" (click)="isMenuOpen = false" class="w-full block py-3 bg-cyan-600 text-white rounded-xl font-bold">Login</a>
                 }
+
+                <button  routerLink="/patient-layout/appointment" (click)="isMenuOpen = false" class="w-full py-3 mt-4 bg-cyan-500 text-white rounded-xl font-bold">Make Appointment</button>
             </li>
         </ul>
     </div>

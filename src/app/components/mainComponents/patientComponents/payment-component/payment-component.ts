@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,41 +12,34 @@ import { MainDataService } from '../../../../core/services/main/main-data-servic
   styleUrl: './payment-component.css',
 })
 export class PaymentComponent {
+private _route = inject(ActivatedRoute);
+  private _router = inject(Router);
+  private _DataService = inject(MainDataService);
 
   fee: number = 0;
   doctorName: string = 'N/A';
   departmentName: string = 'N/A';
-  appointmentData!: Appointment;
-  
+  appointmentData!: any;
   
   loading: boolean = false;
   paymentStatus: 'pending' | 'processing' | 'success' | 'failed' = 'pending';
-
- 
   paymentForm!: FormGroup;
 
-  constructor(
-    private _route: ActivatedRoute,
-    private _router: Router,
-    private _DataService: MainDataService
-  ) {}
-
   ngOnInit(): void {
-   
     this.initPaymentForm();
 
-   
     this._route.queryParams.subscribe(params => {
-      this.fee = parseFloat(params['fee']) || 0;
+      this.fee = Number(params['fee']) || 0;
       this.doctorName = params['doctorName'] || 'N/A';
-      this.departmentName = params['specialty'] || 'General';
+    
+      this.departmentName = params['department'] || 'General';
+
       if (params['appointment']) {
         this.appointmentData = JSON.parse(params['appointment']);
       }
     });
   }
 
-  
   initPaymentForm(): void {
     this.paymentForm = new FormGroup({
       cardName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
@@ -62,29 +55,21 @@ export class PaymentComponent {
     this.loading = true;
     this.paymentStatus = 'processing';
     
-    
+    // * Payment process simulation
     setTimeout(() => {
-      const paymentSuccessful = true; 
-      
-      if (paymentSuccessful) {
-        this.saveAppointment();
-      } else {
-        this.paymentStatus = 'failed';
-        this.loading = false;
-      }
-    }, 2000);
+       this.saveAppointment();
+    }, 900);
   }
 
   saveAppointment(): void {
-    this.paymentStatus = 'success';
-    
-    
+    // * 1. Save the reservation in the schedule 
     this._DataService.makeAppointment(this.appointmentData).subscribe({
-      next: (newAppointment) => {
-        console.log('Appointment saved:', newAppointment);
-        this.loading = false;
-        alert('Payment successful and appointment booked!');
-        this._router.navigate(['/home']);
+      next: () => {
+        if (this.appointmentData.slotId) {
+          this.updateSlotCount(this.appointmentData.slotId);
+        } else {
+          this.finalizeSuccess();
+        }
       },
       error: (err) => {
         this.paymentStatus = 'failed';
@@ -92,6 +77,37 @@ export class PaymentComponent {
         console.error('Error saving appointment:', err);
       }
     });
+  }
+
+  updateSlotCount(slotId: string): void {
+  this._DataService.getSlotById(slotId).subscribe({
+    next: (currentSlot) => {
+      if (currentSlot) {
+        const updatedCount = (currentSlot.bookedCount || 0) + 1;
+
+        this._DataService.updateSlot(slotId, { bookedCount: updatedCount }).subscribe({
+          next: () => this.finalizeSuccess(),
+          error: (err) => {
+            console.error("Update Slot Error:", err);
+            this.finalizeSuccess(); 
+          }
+        });
+      } else {
+        this.finalizeSuccess();
+      }
+    },
+    error: (err) => {
+      console.error("Get Slot Error:", err);
+      this.finalizeSuccess(); 
+    }
+  });
+}
+
+  finalizeSuccess(): void {
+    this.paymentStatus = 'success';
+    this.loading = false;
+    alert('Payment successful and appointment booked!');
+    this._router.navigate(['/patient-layout/home']);
   }
 
 }

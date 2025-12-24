@@ -46,11 +46,11 @@ export class LoginComponent {
         console.log('User Role is:', userRole);
 
         if (userRole === 'Doctor') {
-          this._Router.navigate(['/doctor']);
+          this._Router.navigate(['/doctor-layout/dashboard']);
         } else if (userRole === 'Patient') {
-          this._Router.navigate(['/home']);
+          this._Router.navigate(['/patient-layout/home']);
         } else {
-          this._Router.navigate(['/home']);
+          this._Router.navigate(['/patient-layout/home']);
         }
       }
     },

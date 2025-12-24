@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
@@ -14,52 +14,72 @@ import { suggestSpecialty } from '../../../../core/constants/symptoms';
   templateUrl: './appointment-form-component.html',
   styleUrl: './appointment-form-component.css',
 })
-export class AppointmentFormComponent  {
+export class AppointmentFormComponent {
+  private _DataService = inject(MainDataService);
+  private _AuthService = inject(AuthService);
+  private _Router = inject(Router);
+
   suggestedDoctors: Doctor[] = [];
   allDoctors: Doctor[] = [];
+  availableSlots: any[] = [];
   suggestedSpecialty: string | null = null;
   loadingDoctors: boolean = true;
   error: string | null = null;
+  selectedSlotId: string | null = null;
+
+  // * specialists list
+  specialties: string[] = [
+    'Cardiology',
+    'Neurology',
+    'Hepatology',
+    'Physical Therapy',
+    'Eyecare',
+    'Pediatrics',
+    'Dermatology',
+  ];
 
   appointmentForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
-    symptoms: new FormControl(''), 
-    tests: new FormControl(''), 
-    selectedDoctorId: new FormControl(null, Validators.required), 
+    symptoms: new FormControl(''),
+    specialty: new FormControl(''),
+    tests: new FormControl(''),
+    selectedDoctorId: new FormControl(null, Validators.required),
     date: new FormControl('', Validators.required),
     time: new FormControl('', Validators.required),
   });
 
-  constructor(
-    private _DataService: MainDataService,
-    private _AuthService: AuthService,
-    private _Router: Router
-  ) {}
-
   ngOnInit(): void {
-    
     this.loadAllDoctors();
 
-   
+    this.appointmentForm.get('selectedDoctorId')?.valueChanges.subscribe((docId) => {
+      if (docId) {
+        this.selectedSlotId = null;
+        this.appointmentForm.patchValue({ date: '', time: '' });
+        this.loadDoctorSlots(docId); // * Here we use the docId we just selected
+      }
+    });
+
+    // * Monitoring specialty and symptoms 
+    this.appointmentForm
+      .get('specialty')
+      ?.valueChanges.subscribe((spec) => this.filterDoctors(spec));
     this.appointmentForm.get('symptoms')?.valueChanges.subscribe((value) => {
-      this.suggest(value);
+      const suggested = suggestSpecialty(value);
+      if (suggested) {
+        this.suggestedSpecialty = suggested;
+        this.appointmentForm.get('specialty')?.setValue(suggested, { emitEvent: true });
+      }
     });
   }
 
-  ngAfterViewInit(){
-     setTimeout(()=> {
-       alert(
-      `If you wish to write down your symptoms, we will refer you to a doctor who specializes in your condition.If you do not wish to do so,please consult a general practitioner or choose a doctor who specializes in your condition.`
-    );
-     } , 1000)
-  }
-
+  // * 1. method that get all doctors 
   loadAllDoctors(): void {
+    this.loadingDoctors = true;
     this._DataService.getDoctors().subscribe({
       next: (data: Doctor[]) => {
         this.allDoctors = data;
-        this.suggestedDoctors = data; 
+        this.suggestedDoctors = data;
         this.loadingDoctors = false;
       },
       error: (err) => {
@@ -69,53 +89,58 @@ export class AppointmentFormComponent  {
     });
   }
 
-  suggest(symptoms: string): void {
-    this.suggestedSpecialty = suggestSpecialty(symptoms);
-
-    if (this.suggestedSpecialty) {
-      
-      this.suggestedDoctors = this.allDoctors.filter(
-        (doc) => doc.specialty === this.suggestedSpecialty
-      );
+  // * filteration method
+  filterDoctors(spec: string): void {
+    if (spec) {
+      this.suggestedDoctors = this.allDoctors.filter((doc) => doc.specialty === spec);
     } else {
-      
       this.suggestedDoctors = this.allDoctors;
     }
+
+    this.appointmentForm.get('selectedDoctorId')?.setValue(null);
+    this.availableSlots = [];
   }
 
-  
+  // * 2. Appointment fetching function (only called when we select a doctor)
+  loadDoctorSlots(doctorId: string): void {
+    this._DataService.getAvailableSlots(doctorId).subscribe({
+      next: (slots) => {
+        // * Filtering here: We only show appointments that still have slots (bookedCount < maxPatients)
+        this.availableSlots = slots.filter((s: any) => s.bookedCount < s.maxPatients);
+        console.log('Available Slots for this doctor:', this.availableSlots);
+      },
+      error: () => (this.error = 'Could not load slots for this doctor.'),
+    });
+  }
+
+  selectSlot(slot: any): void {
+    this.selectedSlotId = slot.id;
+    this.appointmentForm.patchValue({ date: slot.day, time: slot.time });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      alert(`Choose a specialty or describe your symptoms to find the right doctor.`);
+    }, 1000);
+  }
 
   submitAppointment(): void {
-    console.log('Form Status:', this.appointmentForm.status); 
-  console.log('Form Errors:', this.appointmentForm.errors);
-  console.log('Form Value:', this.appointmentForm.value);
-
- 
     if (this.appointmentForm.invalid) return;
-
     const formValue = this.appointmentForm.value;
-    
-    const patientId = this._AuthService.tokenDecode?.id || 101;
-
-    const appointmentData: Appointment = {
-      doctorId: formValue.selectedDoctorId,
-      patientId: patientId,
-      date: formValue.date,
-      time: formValue.time,
-      status: 'Pending',
-      symptoms: formValue.symptoms,
-      tests: formValue.tests,
+    const appointmentData = {
+      ...formValue,
+      patientId: this._AuthService.tokenDecode?.id || '101',
+      slotId: this.selectedSlotId,
     };
+    const selectedDoc = this.allDoctors.find((d) => d.id === formValue.selectedDoctorId);
 
-    
-    this._Router.navigate(['/payment'], {
+    this._Router.navigate(['/patient-layout/payment'], {
       queryParams: {
-        fee: this.allDoctors.find((d) => d.id === formValue.selectedDoctorId)?.fee,
-        doctorName: this.allDoctors.find((d) => d.id === formValue.selectedDoctorId)?.name,
-        department:  this.allDoctors.find((d) => d.id === formValue.selectedDoctorId)?.specialty,
-        appointment: JSON.stringify(appointmentData), 
+        fee: selectedDoc?.fee,
+        doctorName: selectedDoc?.name,
+        department: selectedDoc?.specialty,
+        appointment: JSON.stringify(appointmentData),
       },
     });
   }
-  
 }

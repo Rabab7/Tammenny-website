@@ -66,7 +66,7 @@ export class RegisterComponent {
       this.loading = false;
 
       setTimeout(() => {
-       this._Router.navigate(['/login']); 
+       this._Router.navigate(['/auth/login']); 
       }, 2000);
      } else {
       this.errorText = res.message;

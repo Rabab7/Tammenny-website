@@ -1,98 +1,146 @@
+<section class="py-8 md:py-16 my-14 md:my-40 min-h-screen flex items-center px-4">
+  <div class="max-w-5xl mx-auto p-5 md:p-10 bg-linear-to-b md:bg-linear-to-r from-white via-white to-cyan-100 
+              dark:from-slate-900 dark:via-slate-900 dark:to-cyan-950 rounded-[2.5rem] md:rounded-[3.5rem] 
+              shadow-2xl w-full border border-white/60 dark:border-slate-800 relative overflow-hidden">
+    
+    <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl"></div>
 
-<section class="py-16 my-40 ">
-  <div class="max-w-4xl mx-auto p-8 bg-linear-to-b md:bg-linear-to-r from-white to-cyan-100 
-              dark:from-slate-900 dark:to-cyan-950 
-              rounded-4xl overflow-hidden min-h-[300px] shadow-2xl transition-all">
+    <div class="relative mb-10 md:mb-14 text-center md:text-left">
+      <h1 class="text-3xl md:text-5xl font-black text-cyan-900 dark:text-cyan-400 mb-4 tracking-tight">
+        Book Your Appointment
+      </h1>
+      <p class="text-gray-500 dark:text-slate-400 font-medium text-sm md:text-base">
+        Select your preferred doctor and a suitable time for your visit.
+      </p>
+      <div class="w-24 h-2 bg-cyan-600 rounded-full mt-4 mx-auto md:mx-0"></div>
+    </div>
 
-    <h1 class="text-3xl font-bold text-cyan-700 dark:text-cyan-400 mb-6 transition-colors">Book Your Appointment</h1>
+    <form [formGroup]="appointmentForm" (ngSubmit)="submitAppointment()" class="space-y-8 md:space-y-12 relative">
 
-    <form [formGroup]="appointmentForm" (ngSubmit)="submitAppointment()" class="space-y-6">
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Full Name</label>
-          <input type="text" formControlName="name"
-            class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-hidden transition-all"
-            placeholder="Enter your name">
-          @if (appointmentForm.get('name')?.touched && appointmentForm.get('name')?.invalid) {
-          <small class="text-red-500 dark:text-red-400">Name is required</small>
-          }
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+        <div class="space-y-3">
+          <label class="flex items-center gap-2 text-gray-700 dark:text-slate-200 font-bold text-base">
+            Full Name
+          </label>
+          <input type="text" formControlName="name" placeholder="John Doe"
+                 class="w-full p-4.5 bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 rounded-2xl focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all dark:text-white">
         </div>
-        <div>
-          <label class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Phone Number</label>
-          <input type="text" formControlName="phone"
-            class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-hidden transition-all"
-            placeholder="01xxxxxxxxx">
-          @if (appointmentForm.get('phone')?.touched && appointmentForm.get('phone')?.invalid) {
-          <small class="text-red-500 dark:text-red-400">Phone is required</small>
-          }
+        <div class="space-y-3">
+          <label class="flex items-center gap-2 text-gray-700 dark:text-slate-200 font-bold text-base">
+            Phone Number
+          </label>
+          <input type="text" formControlName="phone" placeholder="01xxxxxxxxx"
+                 class="w-full p-4.5 bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 rounded-2xl focus:ring-4 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all dark:text-white">
         </div>
       </div>
 
-      <div>
-        <label for="symptoms" class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Symptoms:</label>
-        <textarea id="symptoms" formControlName="symptoms" rows="3"
-          class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 focus:outline-hidden transition-all"
-          placeholder="Describe how you feel..."></textarea>
-        @if (suggestedSpecialty) {
-        <p class="mt-2 text-md text-green-600 dark:text-green-400 font-medium italic">
-          Based on your symptoms, we suggest **{{ suggestedSpecialty }}** specialists.
-        </p>
-        }
-      </div>
-
-      <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-cyan-100">Choose a Doctor:</h2>
-
-      @if (loadingDoctors) {
-      <p class="dark:text-slate-400">Loading doctors...</p>
-      } @else {
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        @for (doc of suggestedDoctors; track doc.id) {
-        <label [for]="'doctor-' + doc.id"
-          class="p-4 border rounded-xl cursor-pointer transition-all flex justify-between items-center" [ngClass]="{
-                     'bg-cyan-50 border-cyan-500 ring-2 ring-cyan-200 dark:bg-cyan-900/30 dark:border-cyan-400 dark:ring-cyan-900/50': appointmentForm.get('selectedDoctorId')?.value === doc.id, 
-                     'bg-white border-gray-200 dark:bg-slate-800 dark:border-slate-700': appointmentForm.get('selectedDoctorId')?.value !== doc.id
-                   }">
-          <input type="radio" [id]="'doctor-' + doc.id" [value]="doc.id" formControlName="selectedDoctorId"
-            class="hidden">
-          <div class="flex items-center gap-4">
-            <img [src]="doc.image" class="w-14 h-14 rounded-full border dark:border-slate-600" alt="">
-            <div>
-              <p class="font-bold text-gray-800 dark:text-white">{{ doc.name }}</p>
-              <p class="text-xs text-cyan-600 dark:text-cyan-400 uppercase font-semibold">{{ doc.specialty }}</p>
+      <div class="p-6 md:p-8 bg-cyan-600/5 dark:bg-cyan-900/10 rounded-4xl border border-cyan-100 dark:border-cyan-900/30">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-3">
+            <label class="block text-cyan-900 dark:text-cyan-300 font-bold text-lg">Specialty</label>
+            <div class="relative">
+              <select formControlName="specialty" 
+                      class="w-full p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl appearance-none cursor-pointer focus:ring-4 focus:ring-cyan-500/20 outline-none dark:text-white">
+                <option value="">Choose a Specialty</option>
+                @for (spec of specialties; track spec) {
+                  <option [value]="spec">{{ spec }}</option>
+                }
+              </select>
             </div>
           </div>
-          <div class="text-right">
-            <p class="font-bold text-green-600 dark:text-green-400">{{ doc.fee }} EGP</p>
-            <p class="text-yellow-500 text-sm">{{ doc.rating }} ⭐</p>
+          <div class="space-y-3">
+            <label class="block text-cyan-900 dark:text-cyan-300 font-bold text-lg">Your Symptoms</label>
+            <textarea formControlName="symptoms" rows="1" placeholder="e.g. Headache..."
+                      class="w-full p-4 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl focus:ring-4 focus:ring-cyan-500/20 outline-none dark:text-white resize-none"></textarea>
           </div>
-        </label>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <h2 class="text-2xl font-black text-gray-800 dark:text-white flex items-center gap-3">
+          <span class="flex items-center justify-center w-10 h-10 bg-cyan-600 text-white rounded-xl shadow-lg shadow-cyan-600/30 text-lg">1</span>
+          Choose Your Doctor
+        </h2>
+
+        @if (loadingDoctors) {
+          <div class="flex flex-col items-center py-12">
+            <div class="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="mt-4 text-gray-500 font-medium italic">Finding experts...</p>
+          </div>
+        } @else {
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6">
+            @for (doc of suggestedDoctors; track doc.id) {
+              <label [for]="'doctor-' + doc.id"
+                class="group relative p-5 bg-white dark:bg-slate-800 border-2 rounded-3xl cursor-pointer transition-all duration-300 flex items-center gap-5 hover:shadow-xl"
+                [ngClass]="{
+                  'border-cyan-600 ring-2 ring-cyan-600/10 bg-cyan-50/30 dark:bg-cyan-900/20 shadow-lg -translate-y-1': appointmentForm.get('selectedDoctorId')?.value === doc.id, 
+                  'border-gray-100 dark:border-slate-700 hover:border-cyan-300': appointmentForm.get('selectedDoctorId')?.value !== doc.id
+                }">
+                
+                <input type="radio" [id]="'doctor-' + doc.id" [value]="doc.id" formControlName="selectedDoctorId" class="hidden">
+                
+                <div class="relative shrink-0">
+                  <img [src]="doc.image" class="w-20 h-20 md:w-24 md:h-24 rounded-2xl object-cover shadow-md border-2 border-white dark:border-slate-700">
+                </div>
+                
+                <div class="grow min-w-0">
+                  <h3 class="font-black text-lg md:text-xl truncate text-gray-800 dark:text-white">{{ doc.name }}</h3>
+                  <p class="text-xs font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mt-1">{{ doc.specialty }}</p>
+                  <div class="flex items-center justify-between mt-3">
+                    <span class="text-gray-900 dark:text-white font-black">{{ doc.fee }} EGP</span>
+                    <span class="text-amber-500 text-sm font-bold">★ {{ doc.rating }}</span>
+                  </div>
+                </div>
+              </label>
+            } @empty {
+              <div class="col-span-full text-center py-16 bg-gray-50 dark:bg-slate-800/50 rounded-[2.5rem] border-2 border-dashed border-gray-200 dark:border-slate-700 text-gray-500 italic">
+                No doctors found for this selection.
+              </div>
+            }
+          </div>
         }
       </div>
-      @if (appointmentForm.get('selectedDoctorId')?.touched && appointmentForm.get('selectedDoctorId')?.invalid) {
-      <p class="text-red-500 dark:text-red-400 text-sm mt-2">Please select a doctor</p>
-      }
-      }
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div>
-          <label class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Appointment Date</label>
-          <input type="date" formControlName="date"
-            class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 transition-all [color-scheme:light] dark:[color-scheme:dark]">
-        </div>
-        <div>
-          <label class="block text-gray-700 dark:text-slate-300 font-semibold mb-2">Preferred Time</label>
-          <input type="time" formControlName="time"
-            class="w-full p-3 border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-cyan-500 transition-all [color-scheme:light] dark:[color-scheme:dark]">
-        </div>
+      <div class="space-y-6 pt-6">
+        <h2 class="text-2xl font-black text-gray-800 dark:text-white flex items-center gap-3">
+          <span class="flex items-center justify-center w-10 h-10 bg-cyan-600 text-white rounded-xl shadow-lg shadow-cyan-600/30 text-lg">2</span>
+          Select Time Slot
+        </h2>
+
+        @if (appointmentForm.get('selectedDoctorId')?.value) {
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            @for (slot of availableSlots; track slot.id) {
+              <button type="button" (click)="selectSlot(slot)"
+                [ngClass]="{
+                  'bg-cyan-700 text-white border-cyan-700 shadow-lg ring-4 ring-cyan-500/20 scale-[0.97]': selectedSlotId === slot.id,
+                  'bg-white dark:bg-slate-800 border-gray-100 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:border-cyan-400': selectedSlotId !== slot.id
+                }" class="p-4 border-2 rounded-2xl transition-all duration-300 text-center md:text-left">
+                <span class="block text-[10px] font-black uppercase opacity-60 mb-1">{{ slot.day }}</span>
+                <span class="block text-lg font-black leading-none">{{ slot.time }}</span>
+                <div class="mt-2 text-[9px] font-bold py-1 px-2 rounded-md"
+                     [ngClass]="selectedSlotId === slot.id ? 'bg-cyan-600/50 text-white' : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'">
+                  {{ slot.maxPatients - slot.bookedCount }} SPOTS LEFT
+                </div>
+              </button>
+            } @empty {
+              <div class="col-span-full p-8 bg-amber-50 dark:bg-amber-900/10 rounded-2xl border border-amber-200 text-center">
+                <p class="text-amber-700 font-bold">⚠️ All appointments booked for today.</p>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="p-10 md:p-16 border-2 border-dashed border-gray-200 dark:border-slate-800 rounded-[2.5rem] text-center bg-gray-50/50 dark:bg-slate-900/30">
+            <p class="text-gray-500 font-bold text-lg italic">Please choose a doctor to view available times.</p>
+          </div>
+        }
       </div>
 
-      <button type="submit" [disabled]="appointmentForm.invalid" class="w-full bg-cyan-600 text-white p-4 rounded-xl font-bold hover:bg-cyan-700 
-                     dark:bg-cyan-500 dark:hover:bg-cyan-600 
-                     disabled:bg-gray-300 dark:disabled:bg-slate-800 disabled:cursor-not-allowed 
-                     transition-all shadow-lg active:scale-95 mt-4">
-        Proceed to Payment
-      </button>
+      <div class="pt-10 md:pt-14 border-t border-gray-100 dark:border-slate-800">
+        <button type="submit" [disabled]="appointmentForm.invalid || !selectedSlotId" 
+          class="w-full bg-cyan-600 text-white p-6 rounded-3xl font-black text-xl md:text-2xl shadow-2xl shadow-cyan-600/30 transition-all duration-300 hover:bg-cyan-700 active:scale-[0.98] disabled:bg-gray-200 dark:disabled:bg-slate-800 disabled:text-gray-400 disabled:cursor-not-allowed">
+          Confirm & Proceed to Payment
+        </button>
+      </div>
 
     </form>
   </div>

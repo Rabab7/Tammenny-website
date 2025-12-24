@@ -1,3 +1,4 @@
+import { DoctorSlotsComponent } from './components/mainComponents/doctorComponents/doctor-slots-component/doctor-slots-component';
 import { PatientDashboard } from './components/mainComponents/patientComponents/patient-dashboard/patient-dashboard';
 import { PaymentComponent } from './components/mainComponents/patientComponents/payment-component/payment-component';
 import { AppointmentFormComponent } from './components/mainComponents/patientComponents/appointment-form-component/appointment-form-component';
@@ -12,25 +13,30 @@ import { LoginComponent } from './components/authComponents/login-component/logi
 import { RegisterComponent } from './components/authComponents/register-component/register-component';
 import { ForgetPasswordComponent } from './components/authComponents/forget-password-component/forget-password-component';
 import { ResetPasswordComponent } from './components/authComponents/reset-password-component/reset-password-component';
-import { MainComponent } from './layouts/main-component/main-component';
 import { DoctorDashboard } from './components/mainComponents/doctorComponents/doctor-dashboard/doctor-dashboard';
+import { NavDoctorComponent } from './components/mainComponents/doctorComponents/nav-doctor-component/nav-doctor-component';
+import { PatientLayout } from './layouts/main-component/patientLayout/patient-layout/patient-layout';
+import { DoctorLayout } from './layouts/main-component/doctorLayout/doctor-layout/doctor-layout';
+
 
 
 export const routes: Routes = [
+ // * 1. auth path
   {
-    path: '',
+    path: 'auth', 
     component: AuthComponent,
     children: [
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent, title: 'login' },
-      { path: 'register', component: RegisterComponent, title: 'register' },
+      { path: 'login', component: LoginComponent, title: 'Login' },
+      { path: 'register', component: RegisterComponent, title: 'Register' },
       { path: 'forgotPassword', component: ForgetPasswordComponent },
       { path: 'resetPassword', component: ResetPasswordComponent },
     ],
   },
+
+  // * 2. patient flow
   {
-    path: '',
-    component: MainComponent,
+    path: 'patient-layout', 
+    component: PatientLayout,
     children: [
       { path: 'home', component: Home, title: 'Home' },
       { path: 'about', component: AboutComponent, title: 'About' },
@@ -39,10 +45,20 @@ export const routes: Routes = [
       { path: 'doctors', component: DoctorsComponent, title: 'Doctors' },
       { path: 'appointment', component: AppointmentFormComponent , title: 'Appointment' },
       { path: 'payment', component: PaymentComponent , title :'Payment' },
-      { path: 'patientDashboard', component: PatientDashboard , title :'patient dashboard' },
-
+      { path: 'dashboard', component: PatientDashboard , title :'Patient Dashboard' },
     ],
   },
 
-  { path: 'doctor', component: DoctorDashboard, title: 'Doctor' },
+  // * 3. doctor flow 
+  {
+    path: 'doctor-layout', 
+    component: DoctorLayout,
+    children: [
+      { path: 'dashboard', component: DoctorDashboard, title: 'Doctor Dashboard' },
+      { path: 'slots', component: DoctorSlotsComponent, title: 'Doctor Dashboard' },
+    ],
+  },
+
+  // * 4. default route
+  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
 ];
